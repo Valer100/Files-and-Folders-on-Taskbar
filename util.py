@@ -1,4 +1,4 @@
-import random, win32com, subprocess, ctypes, appdirs
+import random, win32com.client, subprocess, ctypes, appdirs
 
 working_folder = appdirs.user_data_dir("Files & Folders on Taskbar", False)
 
@@ -13,6 +13,15 @@ def pick_icon(default_icon = "C:\\Windows\\System32\\shell32.dll,0") -> str:
 
     if result: return f"{icon_file_buffer.value},{icon_index.value}"
     else: return default_icon
+
+def create_separator_shortcut(icon: str):
+    shell = win32com.client.Dispatch("WScript.Shell")
+    shortcut = shell.CreateShortCut(f"{working_folder}\\Separator.lnk")
+    shortcut.TargetPath = working_folder + "\\separators\\separator.vbs"
+    shortcut.IconLocation = working_folder + "\\separator_\\" + icon
+    shortcut.save()
+
+    subprocess.call(f"explorer \"{working_folder}\"", shell = True)
 
 def create_file_shortcut(file_path):
     path_list = file_path.split("/")
