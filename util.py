@@ -16,12 +16,19 @@ def pick_icon(default_icon = "C:\\Windows\\System32\\shell32.dll,0") -> str:
 
 def create_separator_shortcut(icon: str):
     shell = win32com.client.Dispatch("WScript.Shell")
-    shortcut = shell.CreateShortCut(f"{working_folder}\\Separator.lnk")
+    shortcut = shell.CreateShortCut(f"{working_folder}\\shortcut\\Separator.lnk")
     shortcut.TargetPath = working_folder + "\\separators\\separator.vbs"
     shortcut.IconLocation = working_folder + "\\separator_\\" + icon
     shortcut.save()
 
     subprocess.call(f"explorer \"{working_folder}\"", shell = True)
+
+    ctypes.windll.user32.MessageBoxW(
+        0,
+        "The shortcut has been created.\n\nNow, a File Explorer window with the folder where was the shortcut created was opened. Drag the shortcut to your taskbar and then close the File Explorer window.\n\nYou have to do this extra step, because it's not that easy for 3rd party programs to pin a shortcut in the taskbar on Windows 10 and 11.", 
+        "Files & Folders on Taskbar", 
+        0x40 | 0x40000
+    )
 
 def create_file_shortcut(file_path):
     path_list = file_path.split("/")
@@ -29,7 +36,7 @@ def create_file_shortcut(file_path):
     random_number = str(random.randint(1000, 9999))
 
     shell = win32com.client.Dispatch("WScript.Shell")
-    shortcut = shell.CreateShortCut(f"{working_folder}\\{file_name}.lnk")
+    shortcut = shell.CreateShortCut(f"{working_folder}\\shortcut\\{file_name}.lnk")
     shortcut.TargetPath = "C:\\Windows\\explorer.exe"
     shortcut.WorkingDirectory = (file_path + random_number).replace(file_name + random_number, "")
     shortcut.Arguments = f"\"{file_name}\""
@@ -37,6 +44,13 @@ def create_file_shortcut(file_path):
     shortcut.save()
 
     subprocess.call(f"explorer \"{working_folder}\"", shell = True)
+
+    ctypes.windll.user32.MessageBoxW(
+        0,
+        "The shortcut has been created.\n\nNow, a File Explorer window with the folder where was the shortcut created was opened. Drag the shortcut to your taskbar and then close the File Explorer window.\n\nYou have to do this extra step, because it's not that easy for 3rd party programs to pin a shortcut in the taskbar on Windows 10 and 11.", 
+        "Files & Folders on Taskbar", 
+        0x40 | 0x40000
+    )
 
 def create_folder_shortcut(folder_path: str, use_folder_icon: bool):
     folder_icon = "C:\\Windows\\System32\\shell32.dll,4"  # Default folder icon
@@ -53,7 +67,7 @@ def create_folder_shortcut(folder_path: str, use_folder_icon: bool):
     random_number = str(random.randint(1000, 9999))
 
     shell = win32com.client.Dispatch("WScript.Shell")
-    shortcut = shell.CreateShortCut(f"{working_folder}\\{folder_name}.lnk")
+    shortcut = shell.CreateShortCut(f"{working_folder}\\shortcut\\{folder_name}.lnk")
     shortcut.TargetPath = "C:\\Windows\\explorer.exe"
     shortcut.WorkingDirectory = (folder_path + random_number).replace(folder_name + random_number, "")
     shortcut.Arguments = f"\"{folder_name}\""
@@ -61,3 +75,10 @@ def create_folder_shortcut(folder_path: str, use_folder_icon: bool):
     shortcut.save()
 
     subprocess.call(f"explorer \"{working_folder}\"", shell = True)
+
+    ctypes.windll.user32.MessageBoxW(
+        0,
+        "The shortcut has been created.\n\nNow, a File Explorer window with the folder where was the shortcut created was opened. Drag the shortcut to your taskbar and then close the File Explorer window.\n\nYou have to do this extra step, because it's not that easy for 3rd party programs to pin a shortcut in the taskbar on Windows 10 and 11.", 
+        "Files & Folders on Taskbar", 
+        0x40 | 0x40000
+    )
