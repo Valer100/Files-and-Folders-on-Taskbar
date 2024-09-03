@@ -1,2 +1,2 @@
 # Files & Folder on Taskbar
-Work in progress
+A simple tool for pinning files and folders to the taskbar.
