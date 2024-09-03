@@ -1,4 +1,4 @@
-import tkinter as tk, subprocess, ctypes, appdirs, shutil, util
+import tkinter as tk, subprocess, ctypes, shutil, util, separator_wizard
 from tkinter import ttk, filedialog
 
 window = tk.Tk()
@@ -13,9 +13,6 @@ subprocess.call(f"rmdir /q /s \"{util.working_folder}\\separators\"", shell = Tr
 shutil.copytree("separators", util.working_folder + "\\separators")
 
 def browse():
-    subprocess.call(f"rmdir /q /s \"{util.working_folder}\\shortcut\"", shell = True)
-    subprocess.call(f"mkdir \"{util.working_folder}\"", shell = True)
-
     if shortcut_type.get() == "file":
         file = filedialog.askopenfile(title = "Choose a file", parent = window)
 
@@ -24,15 +21,8 @@ def browse():
     else:
         folder = filedialog.askdirectory(title = "Choose a folder", parent = window).replace("\"", "")
 
-        if not folder == "": util.create_folder_shortcut(folder)
+        if not folder == "": util.create_folder_shortcut(folder, use_folder_icon.get())
         else: return
-
-    ctypes.windll.user32.MessageBoxW(
-        0,
-        "The shortcut has been created.\n\nNow, a File Explorer window with the folder where was the shortcut created was opened. Drag the shortcut to your taskbar and then close the File Explorer window.\n\nYou have to do this extra step, because it's not that easy for 3rd party programs to pin a shortcut in the taskbar on Windows 10 and 11.", 
-        "Files & Folders on Taskbar", 
-        0x40 | 0x40000
-    )
 
 def file_selected():
     pin_it_btn["text"] = "Choose a file & pin it to taskbar"
@@ -59,7 +49,7 @@ use_folder_icon_tick = ttk.Checkbutton(window, text = "Use folder's icon", varia
 pin_it_btn = ttk.Button(window, text = "Choose a file & pin it to taskbar", default = "active", command = browse)
 pin_it_btn.pack(fill = "x", pady = (16, 0))
 
-pin_separator_btn = ttk.Button(window, text = "Add separator", command = browse)
+pin_separator_btn = ttk.Button(window, text = "Pin separator", command = separator_wizard.show)
 pin_separator_btn.pack(fill = "x", pady = (8, 4))
 
 window.mainloop()
