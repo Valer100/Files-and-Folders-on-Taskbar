@@ -6,16 +6,15 @@ window.title("Files & Folders on Taskbar")
 window.resizable(False, False)
 window.configure(padx = 14, pady = 8)
 
-working_folder = appdirs.user_data_dir("Files & Folders on Taskbar", False)
 shortcut_type = tk.StringVar(value = "file")
 use_folder_icon = tk.BooleanVar(value = False)
 
-subprocess.call(f"rmdir /q /s \"{working_folder}\\separators\"", shell = True)
-shutil.copytree("separators", working_folder + "\\separators")
+subprocess.call(f"rmdir /q /s \"{util.working_folder}\\separators\"", shell = True)
+shutil.copytree("separators", util.working_folder + "\\separators")
 
 def browse():
-    subprocess.call(f"rmdir /q /s \"{working_folder}\\shortcut\"", shell = True)
-    subprocess.call(f"mkdir \"{working_folder}\"", shell = True)
+    subprocess.call(f"rmdir /q /s \"{util.working_folder}\\shortcut\"", shell = True)
+    subprocess.call(f"mkdir \"{util.working_folder}\"", shell = True)
 
     if shortcut_type.get() == "file":
         file = filedialog.askopenfile(title = "Choose a file", parent = window)
