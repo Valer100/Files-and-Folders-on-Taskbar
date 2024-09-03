@@ -5,6 +5,7 @@ def show():
     window = tk.Toplevel()
     window.title("Pin separator")
     window.resizable(False, False)
+    window.iconbitmap("icon.ico")
     window.configure(padx = 14, pady = 8)
 
     separator_type = tk.StringVar(value = "vertical")
