@@ -1,3 +1,7 @@
+<div align="center">
+    <img src="assets/banner.png">
+</div>
+
 # Files & Folder on Taskbar
 A simple tool for pinning files and folders to the taskbar. It looks like this:
 
