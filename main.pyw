@@ -1,5 +1,5 @@
 import tkinter as tk, random, win32com.client, subprocess, ctypes, appdirs
-from tkinter import ttk, messagebox, filedialog
+from tkinter import ttk, filedialog
 
 window = tk.Tk()
 window.title("Files & Folders on Taskbar")
