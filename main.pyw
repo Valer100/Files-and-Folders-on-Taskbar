@@ -1,4 +1,4 @@
-import tkinter as tk, subprocess, ctypes, shutil, util, separator_wizard
+import tkinter as tk, subprocess, shutil, util, separator_wizard
 from tkinter import ttk, filedialog
 
 window = tk.Tk()
