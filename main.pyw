@@ -4,6 +4,7 @@ from tkinter import ttk, filedialog
 window = tk.Tk()
 window.title("Files & Folders on Taskbar")
 window.resizable(False, False)
+window.iconbitmap("icon.ico")
 window.configure(padx = 14, pady = 8)
 
 shortcut_type = tk.StringVar(value = "file")
