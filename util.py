@@ -85,7 +85,7 @@ def delete_remnants():
     subprocess.call(f"mkdir \"{working_folder}\\shortcut\"", shell = True)
 
 def post_create_shortcut():
-    subprocess.call(f"explorer \"{working_folder}\\shortcut\"", shell = True)
+    subprocess.call(f"start \"{working_folder}\\shortcut\"", shell = True)
 
     ctypes.windll.user32.MessageBoxW(
         None,
