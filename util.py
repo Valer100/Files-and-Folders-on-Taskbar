@@ -22,11 +22,16 @@ def pick_icon(default_icon = "C:\\Windows\\System32\\shell32.dll,0") -> str:
 def create_separator_shortcut(icon: str):
     delete_remnants()
 
+    random_number = random.randint(100000, 999999)
+
+    subprocess.call(f"md \"{working_folder}\\separator_files\\", shell = True)
+    open(working_folder + f"\\separator_files\\separator_{random_number}.vbs", "w").write("")
+
     shell = win32com.client.Dispatch("WScript.Shell")
-    shortcut = shell.CreateShortCut(f"{working_folder}\\shortcut\\Separator.lnk")
-    shortcut.TargetPath = "C:\\Windows\\explorer.exe"
+    shortcut = shell.CreateShortCut(f"{working_folder}\\shortcut\\Separator {random_number}.lnk")
+    shortcut.TargetPath = f"C:\\Windows\\explorer.exe"
     shortcut.WorkingDirectory = working_folder + "\\separators"
-    shortcut.Arguments = f"\"separator.vbs\""
+    shortcut.Arguments = working_folder + f"\\separator_files\\separator_{random_number}.vbs"
     shortcut.IconLocation = working_folder + "\\separators\\separator_" + icon + ".ico"
     shortcut.save()
 
@@ -50,6 +55,8 @@ def create_file_shortcut(file_path):
     post_create_shortcut()
 
 def create_folder_shortcut(folder_path: str, use_folder_icon: bool):
+    delete_remnants()
+
     folder_icon = "C:\\Windows\\System32\\shell32.dll,4"  # Default folder icon
     folder_config = subprocess.getoutput(f"type \"{folder_path}\\desktop.ini\"").split("\n")
 
