@@ -1,17 +1,20 @@
-import tkinter as tk, subprocess, shutil, util, separator_wizard
+import tkinter as tk, subprocess, shutil, util, os, separator_wizard
 from tkinter import ttk, filedialog
+
+if os.path.exists("icon.ico"): internal = ""
+else: internal = "_internal\\"
 
 window = tk.Tk()
 window.title("Files & Folders on Taskbar")
 window.resizable(False, False)
-window.iconbitmap("icon.ico")
+window.iconbitmap(internal + "icon.ico")
 window.configure(padx = 14, pady = 8)
 
 shortcut_type = tk.StringVar(value = "file")
 use_folder_icon = tk.BooleanVar(value = False)
 
 subprocess.call(f"rmdir /q /s \"{util.working_folder}\\separators\"", shell = True)
-shutil.copytree("separators", util.working_folder + "\\separators")
+shutil.copytree(internal + "separators", util.working_folder + "\\separators")
 
 def browse():
     if shortcut_type.get() == "file":
