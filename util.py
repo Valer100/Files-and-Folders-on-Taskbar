@@ -1,4 +1,7 @@
-import random, win32com.client, subprocess, ctypes, appdirs
+import random, win32com.client, subprocess, ctypes, appdirs, os
+
+if os.path.exists("icon.ico"): internal = ""
+else: internal = "_internal\\"
 
 working_folder = appdirs.user_data_dir("Files & Folders on Taskbar", False)
 
