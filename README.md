@@ -52,7 +52,7 @@ Just run `build_app.bat`. It will do everything needed to build the app. After t
 ### Building the installer
 Before building the installer, you must install Inno Setup Compiler on your computer. You can download it [here](https://jrsoftware.org/isdl.php/).
 
-Also, you must build the app first before building the installer. After building the app, make sure a `build` folder appears. If it doesn't and appears a `dist` folder intstead, rename that folder to `build`. After that, right-click `build_installer.iss` and choose `Compile with Inno Setup`. After the installer was built, you can find it in the same `build` folder.
+Also, you must build the app first before building the installer. After building the app, make sure a `build` folder appears. If it doesn't and appears a `dist` folder intstead, rename that folder to `build`. After that, right-click `build_installer.iss` and choose `Compile`. After the installer was built, you can find it in the same `build` folder.
 
 ## 💿 Download
 Comming soon...
