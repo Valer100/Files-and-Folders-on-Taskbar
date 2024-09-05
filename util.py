@@ -1,4 +1,4 @@
-import random, win32com.client, win32ui, win32gui, subprocess, ctypes, appdirs, os
+import random, win32com.client, win32ui, win32gui, subprocess, ctypes, os
 from PIL import Image
 
 if os.path.exists("icon.ico"): internal = ""
