@@ -1,10 +1,10 @@
-import random, win32com.client, win32ui, win32gui, win32con, win32api, subprocess, ctypes, appdirs, os
+import random, win32com.client, win32ui, win32gui, subprocess, ctypes, appdirs, os
 from PIL import Image
 
 if os.path.exists("icon.ico"): internal = ""
 else: internal = "_internal\\"
 
-working_folder = appdirs.user_data_dir("Files & Folders on Taskbar", False)
+working_folder = appdirs.user_data_dir("Files & Folders on Taskbar", False, roaming = True)
 script_template = "WScript.CreateObject(\"WScript.Shell\").Run \"cmd /c (command)\", 0, True"
 
 def pick_icon() -> str:
