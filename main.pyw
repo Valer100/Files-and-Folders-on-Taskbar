@@ -1,4 +1,4 @@
-import tkinter as tk, subprocess, shutil, util, separator_wizard, customize_shortcut
+import tkinter as tk, subprocess, shutil, util, separator_wizard, customize_shortcut, open_source_licenses
 from tkinter import ttk, filedialog
 
 window = tk.Tk()
@@ -29,6 +29,7 @@ def file_selected(): pin_it_btn["text"] = "Choose a file & pin it to taskbar"
 def folder_selected(): pin_it_btn["text"] = "Choose a folder & pin it to taskbar"
 
 ttk.Label(window, text = "Files & Folders on Taskbar", font = ("Segoe UI Semibold", 17)).pack(anchor = "w")
+ttk.Button(window, text = "See open source licenses", style = "Highlight.Toolbutton", command = open_source_licenses.show).pack(anchor = "w")
 
 ttk.Label(window, text = "Pin to taskbar a shortcut to:").pack(anchor = "w", pady = 8)
 ttk.Radiobutton(window, text = "A file", variable = shortcut_type, value = "file", command = file_selected).pack(anchor = "w")
@@ -38,6 +39,10 @@ pin_it_btn = ttk.Button(window, text = "Choose a file & pin it to taskbar", defa
 pin_it_btn.pack(fill = "x", pady = (16, 0))
 
 pin_separator_btn = ttk.Button(window, text = "Pin separator", command = separator_wizard.show)
-pin_separator_btn.pack(fill = "x", pady = (8, 4))
+pin_separator_btn.pack(fill = "x", pady = 4)
+
+style = ttk.Style()
+style.configure("Highlight.Toolbutton", foreground = "SystemHighlight")
+
 
 window.mainloop()
