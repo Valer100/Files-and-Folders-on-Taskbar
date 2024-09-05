@@ -1,3 +1,2 @@
-appdirs
 pywin32
 Pillow
