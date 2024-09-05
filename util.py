@@ -4,6 +4,7 @@ if os.path.exists("icon.ico"): internal = ""
 else: internal = "_internal\\"
 
 working_folder = appdirs.user_data_dir("Files & Folders on Taskbar", False)
+script_template = "WScript.CreateObject(\"WScript.Shell\").Run \"cmd /c (command)\", 0, True"
 
 def pick_icon(default_icon = "C:\\Windows\\System32\\shell32.dll,0") -> str:
     delete_remnants()
@@ -22,16 +23,16 @@ def pick_icon(default_icon = "C:\\Windows\\System32\\shell32.dll,0") -> str:
 def create_separator_shortcut(icon: str):
     delete_remnants()
 
-    random_number = random.randint(100000, 999999)
+    random_number = random.randint(1000000000, 9999999999)
 
-    subprocess.call(f"md \"{working_folder}\\separator_files\\", shell = True)
-    open(working_folder + f"\\separator_files\\separator_{random_number}.vbs", "w").write("")
+    subprocess.call(f"md \"{working_folder}\\shortcuts\\", shell = True)
+    open(working_folder + f"\\shortcuts\\separator_shortcut_{random_number}.vbs", "w", encoding = "utf8").write("")
 
     shell = win32com.client.Dispatch("WScript.Shell")
     shortcut = shell.CreateShortCut(f"{working_folder}\\shortcut\\Separator {random_number}.lnk")
-    shortcut.TargetPath = f"C:\\Windows\\explorer.exe"
+    shortcut.TargetPath = f"C:\\Windows\\System32\\wscript.exe"
     shortcut.WorkingDirectory = working_folder + "\\separators"
-    shortcut.Arguments = working_folder + f"\\separator_files\\separator_{random_number}.vbs"
+    shortcut.Arguments = f"\"{working_folder}\\shortcuts\\separator_shortcut_{random_number}.vbs\""
     shortcut.IconLocation = working_folder + "\\separators\\separator_" + icon + ".ico"
     shortcut.save()
 
@@ -40,15 +41,19 @@ def create_separator_shortcut(icon: str):
 def create_file_shortcut(file_path):
     delete_remnants()
 
+    random_number = random.randint(1000000000, 9999999999)
     path_list = file_path.split("/")
     file_name = path_list[len(path_list) - 1]
-    random_number = str(random.randint(1000, 9999))
+    random_number_2 = str(random.randint(1000, 9999))
+
+    subprocess.call(f"md \"{working_folder}\\shortcuts\\", shell = True)
+    open(working_folder + f"\\shortcuts\\file_shortcut_{random_number}.vbs", "w", encoding = "utf8").write(script_template.replace("(command)", f"\"\"{file_path}\"\""))
 
     shell = win32com.client.Dispatch("WScript.Shell")
     shortcut = shell.CreateShortCut(f"{working_folder}\\shortcut\\{file_name}.lnk")
     shortcut.TargetPath = "C:\\Windows\\explorer.exe"
-    shortcut.WorkingDirectory = (file_path + random_number).replace(file_name + random_number, "")
-    shortcut.Arguments = f"\"{file_name}\""
+    shortcut.WorkingDirectory = (file_path + random_number_2).replace(file_name + random_number_2, "")
+    shortcut.Arguments = f"\"{working_folder}\\shortcuts\\file_shortcut_{random_number}.vbs\""
     shortcut.IconLocation = pick_icon()
     shortcut.save()
 
@@ -56,7 +61,8 @@ def create_file_shortcut(file_path):
 
 def create_folder_shortcut(folder_path: str, use_folder_icon: bool):
     delete_remnants()
-
+    
+    random_number = random.randint(1000000000, 9999999999)
     folder_icon = "C:\\Windows\\System32\\shell32.dll,4"  # Default folder icon
     folder_config = subprocess.getoutput(f"type \"{folder_path}\\desktop.ini\"").split("\n")
 
@@ -68,13 +74,14 @@ def create_folder_shortcut(folder_path: str, use_folder_icon: bool):
 
     path_list = folder_path.split("/")
     folder_name = path_list[len(path_list) - 1]
-    random_number = str(random.randint(1000, 9999))
+
+    subprocess.call(f"md \"{working_folder}\\shortcuts\\", shell = True)
+    open(working_folder + f"\\shortcuts\\folder_shortcut_{random_number}.vbs", "w", encoding = "utf8").write(script_template.replace("(command)", f"start \"\"\"\" \"\"{folder_path}\"\""))
 
     shell = win32com.client.Dispatch("WScript.Shell")
     shortcut = shell.CreateShortCut(f"{working_folder}\\shortcut\\{folder_name}.lnk")
-    shortcut.TargetPath = "C:\\Windows\\explorer.exe"
-    shortcut.WorkingDirectory = (folder_path + random_number).replace(folder_name + random_number, "")
-    shortcut.Arguments = f"\"{folder_name}\""
+    shortcut.TargetPath = "C:\\Windows\\System32\\wscript.exe"
+    shortcut.Arguments = f"\"{working_folder}\\shortcuts\\folder_shortcut_{random_number}.vbs\""
     shortcut.IconLocation = folder_icon
     shortcut.save()
 
@@ -85,7 +92,7 @@ def delete_remnants():
     subprocess.call(f"mkdir \"{working_folder}\\shortcut\"", shell = True)
 
 def post_create_shortcut():
-    subprocess.call(f"start \"{working_folder}\\shortcut\"", shell = True)
+    subprocess.call(f"start \"\" \"{working_folder}\\shortcut\"", shell = True)
 
     ctypes.windll.user32.MessageBoxW(
         None,
