@@ -44,5 +44,4 @@ pin_separator_btn.pack(fill = "x", pady = 4)
 style = ttk.Style()
 style.configure("Highlight.Toolbutton", foreground = "SystemHighlight")
 
-
 window.mainloop()
