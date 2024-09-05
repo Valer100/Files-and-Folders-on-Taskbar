@@ -83,5 +83,5 @@ def show(shortcut_type: str, path: str):
     if shortcut_type == "folder": show_change_icon_btn()
     else: update_icon("C:/Windows/System32/shell32.dll", 0)
 
-    window.focus_get()
+    window.focus_set()
     window.bind("<Escape>", lambda event: window.destroy())
