@@ -14,9 +14,13 @@ It can also create a separator shortcut for further organising the shortcuts on 
 ## ℹ️ How it works?
 Before creating the shortcut, you'll be asked to pick the file/folder you want to pin to the taskbar. 
 
-Then, you will be asked to choose an icon for the shortcut. If you want to pin a folder, in the main window of the program you will have an option to use the folder's icon if it has a custom one.
+After choosing the file or folder, a dialog asking you to customize the shortcut will appear. It looks like this:
 
-After choosing the icon, a File Explorer window will open with the folder where the shortcut has been saved. Now you'll need to drag the shortcut to your taskbar. I will have to find a way to pin the shortcut directly to the taskbar, but right now it seems complicated...
+![Customization dialog](assets/screenshot_shortcut_customization.png)
+
+This dialog will allow you to change the name of the shortcut and its icon. If you uncheck "Use folder's icon", you will be able to choose a custom icon for the folder's shortcut. You can also choose a custom icon for a file's shortcut.
+
+After customizing the shortcut, a File Explorer window will open with the folder where the shortcut has been saved. Now you'll need to drag the shortcut to your taskbar. I will have to find a way to pin the shortcut directly to the taskbar, but right now it seems complicated...
 
 ## 🎨 Separator styles
 This app supports the following separator styles:
