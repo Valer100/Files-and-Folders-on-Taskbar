@@ -85,7 +85,7 @@ def post_create_shortcut():
 
     ctypes.windll.user32.MessageBoxW(
         None,
-        "The shortcut has been created.\n\nNow, a File Explorer window with the folder where was the shortcut created was opened. Drag the shortcut to your taskbar and then close the File Explorer window.\n\nYou have to do this extra step, because it's not that easy for 3rd party programs to pin a shortcut in the taskbar on Windows 10 and 11.", 
+        "The shortcut has been created.\n\nNow, drag the shortcut from the folder that was opened to your taskbar and then close the File Explorer window.\n\nYou have to do this extra step, because it's not that easy for 3rd party programs to pin a shortcut to the taskbar on Windows 10 and 11.", 
         "Files & Folders on Taskbar", 
         0x40 | 0x40000
     )
