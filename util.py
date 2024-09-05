@@ -6,6 +6,7 @@ else: internal = "_internal\\"
 
 working_folder = appdirs.user_data_dir("Files & Folders on Taskbar", False, roaming = True)
 script_template = "WScript.CreateObject(\"WScript.Shell\").Run \"cmd /c (command)\", 0, True"
+script_template_2 = "WScript.CreateObject(\"WScript.Shell\").Run \"(command)\", 0, True"
 
 def pick_icon() -> str:
     delete_remnants()
@@ -46,7 +47,8 @@ def create_file_shortcut(file_path, name: str, icon_path: str, icon_index: int =
     random_number_2 = str(random.randint(1000, 9999))
 
     subprocess.call(f"md \"{working_folder}\\shortcuts\\", shell = True)
-    open(working_folder + f"\\shortcuts\\file_shortcut_{random_number}.vbs", "w", encoding = "utf8").write(script_template.replace("(command)", f"\"\"{file_path}\"\""))
+    open(working_folder + f"\\shortcuts\\file_shortcut_{random_number}.bat", "w", encoding = "utf8").write(f"chcp 65001 > nul\n\"{file_path}\"")
+    open(working_folder + f"\\shortcuts\\file_shortcut_{random_number}.vbs", "w", encoding = "utf8").write(script_template_2.replace("(command)", f"\"\"{working_folder}\\shortcuts\\file_shortcut_{random_number}.bat\"\""))
 
     shell = win32com.client.Dispatch("WScript.Shell")
     shortcut = shell.CreateShortCut(f"{working_folder}\\shortcut\\{name}.lnk")
@@ -64,7 +66,8 @@ def create_folder_shortcut(folder_path: str, name: str, icon_path: str, icon_ind
     random_number = random.randint(1000000000, 9999999999)
 
     subprocess.call(f"md \"{working_folder}\\shortcuts\\", shell = True)
-    open(working_folder + f"\\shortcuts\\folder_shortcut_{random_number}.vbs", "w", encoding = "utf8").write(script_template.replace("(command)", f"start \"\"\"\" \"\"{folder_path}\"\""))
+    open(working_folder + f"\\shortcuts\\folder_shortcut_{random_number}.bat", "w", encoding = "utf8").write(f"chcp 65001 > nul\nstart \"\" \"{folder_path}\"")
+    open(working_folder + f"\\shortcuts\\folder_shortcut_{random_number}.vbs", "w", encoding = "utf8").write(script_template_2.replace("(command)", f"\"\"{working_folder}\\shortcuts\\folder_shortcut_{random_number}.bat\"\""))
 
     shell = win32com.client.Dispatch("WScript.Shell")
     shortcut = shell.CreateShortCut(f"{working_folder}\\shortcut\\{name}.lnk")
