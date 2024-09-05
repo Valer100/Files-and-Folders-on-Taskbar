@@ -19,7 +19,7 @@ echo.
 echo (3/4) Building with PyInstaller...
 echo.
 
-python -m PyInstaller main.pyw --onedir --icon icon.ico --version-file "version.txt" --name "fnf_on_taskbar" --add-data "separators;./separators/" --add-data "icon.ico;." --exclude-module "numpy" --exclude-module "setuptools" --exclude-module "wheel" --exclude-module "importlib_metadata" --exclude-module "markupsafe"
+python -m PyInstaller main.pyw --onedir --icon icon.ico --version-file "version.txt" --name "fnf_on_taskbar" --add-data "separators;./separators/" --add-data "icon.ico;." --add-data "OPEN_SOURCE_LICENSES.txt;." --exclude-module "numpy" --exclude-module "setuptools" --exclude-module "wheel" --exclude-module "importlib_metadata" --exclude-module "markupsafe"
 
 echo .
 echo (4/4) Deleting temporary files...
