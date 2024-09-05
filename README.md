@@ -35,5 +35,24 @@ When creating a separator shortcut, you will be asked about its style in this wi
 
 ![Pin separator window](assets/screenshot_separators.png)
 
+## ▶️ Running from source
+Before running from the source, you must install the dependencies. To do that, open Command Prompt in the folder of the cloned repository and run the following command:
+
+```
+pip install -r requirements.txt
+```
+
+After that, open the `main.py` file.
+
+## 🏗️ Building
+
+### Building the app
+Just run `build_app.bat`. It will do everything needed to build the app. After the build process is done, you can find the built app in a `build` folder (or in a `dist` folder if the renaming process fails).
+
+### Building the installer
+Before building the installer, you must install Inno Setup Compiler on your computer. You can download it [here](https://jrsoftware.org/isdl.php/).
+
+Also, you must build the app first before building the installer. After building the app, make sure a `build` folder appears. If it doesn't and appears a `dist` folder intstead, rename that folder to `build`. After that, right-click `build_installer.iss` and choose `Compile with Inno Setup`. After the installer was built, you can find it in the same `build` folder.
+
 ## 💿 Download
 Comming soon...
