@@ -1,4 +1,4 @@
-import tkinter as tk, subprocess, shutil, util, separator_wizard, edit_shortcut
+import tkinter as tk, subprocess, shutil, util, separator_wizard, customize_shortcut
 from tkinter import ttk, filedialog
 
 window = tk.Tk()
@@ -17,12 +17,12 @@ def browse():
     if shortcut_type.get() == "file":
         file = filedialog.askopenfile(title = "Choose a file", parent = window)
 
-        if not file.name == "": edit_shortcut.show("file", file.name)
+        if not file.name == "": customize_shortcut.show("file", file.name)
         else: return
     else:
         folder = filedialog.askdirectory(title = "Choose a folder", parent = window).replace("\"", "")
 
-        if not folder == "": edit_shortcut.show("folder", folder)
+        if not folder == "": customize_shortcut.show("folder", folder)
         else: return
 
 def file_selected(): pin_it_btn["text"] = "Choose a file & pin it to taskbar"

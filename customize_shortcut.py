@@ -9,7 +9,7 @@ def show(shortcut_type: str, path: str):
     shortcut_icon_index = 0
 
     window = tk.Toplevel()
-    window.title("Edit shortcut")
+    window.title("Customize shortcut")
     window.resizable(False, False)
     window.iconbitmap(util.internal + "icon.ico")
     window.configure(padx = 16, pady = 16)
