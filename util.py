@@ -4,7 +4,7 @@ from PIL import Image
 if os.path.exists("icon.ico"): internal = ""
 else: internal = "_internal\\"
 
-working_folder = "C:\\Files & Folders on Taskbar\\"
+working_folder = "C:\\Users\\Public\\Documents\\Files & Folders on Taskbar\\"
 script_template = "WScript.CreateObject(\"WScript.Shell\").Run \"cmd /c (command)\", 0, True"
 script_template_2 = "WScript.CreateObject(\"WScript.Shell\").Run \"(command)\", 0, True"
 
@@ -87,7 +87,7 @@ def delete_remnants():
     subprocess.call(f"mkdir \"{working_folder}\\shortcut\"", shell = True)
 
 def post_create_shortcut():
-    subprocess.call(f"start \"\" \"{working_folder}\\shortcut\"", shell = True)
+    subprocess.call(f"explorer \"{working_folder}\\shortcut\"", shell = True)
 
     ctypes.windll.user32.MessageBoxW(
         None,
