@@ -1,12 +1,15 @@
-import random, win32com.client, win32ui, win32gui, subprocess, ctypes, os
+import random, win32com.client, win32ui, win32gui, subprocess, ctypes, os, getpass
 from PIL import Image
 
 if os.path.exists("icon.ico"): internal = ""
 else: internal = "_internal\\"
 
 working_folder = "C:\\Users\\Public\\Documents\\Files & Folders on Taskbar\\"
+user_preferences = f"C:\\Users\\{getpass.getuser()}\\AppData\\Roaming\\Files & Folders on Taskbar"
 script_template = "WScript.CreateObject(\"WScript.Shell\").Run \"cmd /c (command)\", 0, True"
 script_template_2 = "WScript.CreateObject(\"WScript.Shell\").Run \"(command)\", 0, True"
+
+if not os.path.exists(user_preferences): os.mkdir(user_preferences)
 
 def pick_icon() -> str:
     delete_remnants()
