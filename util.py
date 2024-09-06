@@ -1,4 +1,4 @@
-import random, win32com.client, win32ui, win32gui, subprocess, ctypes, os, getpass
+import random, win32com.client, win32ui, win32gui, subprocess, ctypes, os, getpass, strings
 from PIL import Image
 
 if os.path.exists("icon.ico"): internal = ""
@@ -10,6 +10,9 @@ script_template = "WScript.CreateObject(\"WScript.Shell\").Run \"cmd /c (command
 script_template_2 = "WScript.CreateObject(\"WScript.Shell\").Run \"(command)\", 0, True"
 
 if not os.path.exists(user_preferences): os.mkdir(user_preferences)
+if not os.path.exists(user_preferences + "\\language"): open(user_preferences + "\\language", "w").write("default")
+
+strings.load_language(open(user_preferences + "\\language", "r").read())
 
 def pick_icon() -> str:
     delete_remnants()
@@ -94,7 +97,7 @@ def post_create_shortcut():
 
     ctypes.windll.user32.MessageBoxW(
         None,
-        "The shortcut has been created.\n\nNow, drag the shortcut from the folder that was opened to your taskbar and then close the File Explorer window.\n\nYou have to do this extra step, because it's not that easy for 3rd party programs to pin a shortcut to the taskbar on Windows 10 and 11.", 
+        strings.lang.shortcut_created_message,
         "Files & Folders on Taskbar", 
         0x40 | 0x40000
     )

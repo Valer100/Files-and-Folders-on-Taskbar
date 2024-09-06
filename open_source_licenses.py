@@ -1,6 +1,8 @@
-import tkinter as tk, util
+import tkinter as tk, util, strings, os
 from tkinter import ttk
 from tkinter.scrolledtext import ScrolledText
+
+strings.load_language(open(util.user_preferences + "\\language", "r").read())
 
 def show():
     window = tk.Toplevel()
@@ -9,7 +11,7 @@ def show():
     window.iconbitmap(util.internal + "icon.ico")
     window.configure(padx = 16, pady = 0)
 
-    ttk.Label(window, text = "Open source licenses", font = ("Segoe UI Semibold", 17)).pack(anchor = "w", pady = (8, 16))
+    ttk.Label(window, text = strings.lang.open_source_licenses, font = ("Segoe UI Semibold", 17)).pack(anchor = "w", pady = (8, 16))
 
     licenses_text = ScrolledText(window, width = "90", height = 30, wrap = "word")
     licenses_text.pack(pady = (0, 16))
