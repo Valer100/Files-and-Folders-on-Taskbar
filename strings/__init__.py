@@ -1,8 +1,9 @@
 import locale, ctypes
 
-def initialize(language: str):
+def load_language(language: str):
+    global lang
     if language == "default": language = locale.windows_locale[ctypes.windll.kernel32.GetUserDefaultUILanguage()]
     
     match language:
-        case "ro_RO": from strings import ro_RO
-        case _: from strings import en_US
+        case "ro_RO": import strings.ro_RO; lang = strings.ro_RO
+        case _: import strings.en_US; lang = strings.en_US
