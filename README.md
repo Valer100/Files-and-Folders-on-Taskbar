@@ -58,7 +58,7 @@ Also, you must build the app first before building the installer. After building
 Click [here](https://github.com/Valer100/Files-and-Folders-on-Taskbar/releases/latest) to download the latest version. You can download either the portable or the installer version.
 
 > [!WARNING]
-> At the moment, the binaries from Releases were built only for 64 bit Windows. They will not work on 32 bit Windows.
+> At the moment, the binaries from Releases tab were built only for 64 bit Windows. They will not work on 32 bit Windows.
 
 ## 📜 License
 [MIT](https://github.com/Valer100/Files-and-Folders-on-Taskbar/blob/main/LICENSE)
