@@ -39,6 +39,7 @@ UninstallDisplayIcon={app}\{#MyAppExeName}
 WizardSmallImageFile=assets\installer\icon_100.bmp,assets\installer\icon_125.bmp,assets\installer\icon_150.bmp,assets\installer\icon_175.bmp,assets\installer\icon_200.bmp,assets\installer\icon_225.bmp,assets\installer\icon_250.bmp
 WizardImageFile=assets\installer\banner.bmp
 WizardSizePercent=100
+VersionInfoVersion=1.0
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
