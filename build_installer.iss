@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Files & Folders on Taskbar"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "1.1.0"
 #define MyAppPublisher "Valer"
 #define MyAppURL "https://github.com/Valer100/Files-and-Folders-on-Taskbar"
 #define MyAppExeName "fnf_on_taskbar.exe"
@@ -39,7 +39,7 @@ UninstallDisplayIcon={app}\{#MyAppExeName}
 WizardSmallImageFile=assets\installer\icon_100.bmp,assets\installer\icon_125.bmp,assets\installer\icon_150.bmp,assets\installer\icon_175.bmp,assets\installer\icon_200.bmp,assets\installer\icon_225.bmp,assets\installer\icon_250.bmp
 WizardImageFile=assets\installer\banner.bmp
 WizardSizePercent=100
-VersionInfoVersion=1.0
+VersionInfoVersion=1.1
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
