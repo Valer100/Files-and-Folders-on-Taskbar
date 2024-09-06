@@ -19,7 +19,7 @@ def show(shortcut_type: str, path: str):
     use_folder_icon = tk.BooleanVar(value = True)
 
     shortcut_info = ttk.Frame(window)
-    shortcut_info.pack()
+    shortcut_info.pack(fill = "x", expand = True)
 
     icon = tk.Canvas(shortcut_info, width = 32, height = 32, bd = 0, highlightthickness = 0)
     icon.pack(side = "left")
@@ -43,8 +43,8 @@ def show(shortcut_type: str, path: str):
         shortcut_icon = icon_path
         shortcut_icon_index = icon_index
 
-    name = ttk.Entry(shortcut_info, width = 40, font = ("Default", 10))
-    name.pack(side = "left", padx = (16, 0))
+    name = ttk.Entry(shortcut_info, font = ("Default", 10))
+    name.pack(side = "left", padx = (16, 0), fill = "x", expand = True)
     
     path_list = path.split("/")
     name.insert(0, path_list[len(path_list) - 1])
@@ -69,8 +69,8 @@ def show(shortcut_type: str, path: str):
         shortcut_icon, shortcut_icon_index = util.pick_icon()
         update_icon(shortcut_icon, shortcut_icon_index)
 
-    change_icon_btn = ttk.Button(window, text = strings.lang.change_icon, width = "13", command = change_icon)
-    change_icon_btn.pack(side = "left")
+    change_icon_btn = ttk.Button(window, text = strings.lang.change_icon, padding = (8, 0, 8, 0), command = change_icon)
+    change_icon_btn.pack(side = "left", padx = (0, 64))
 
     def create_shortcut():
         shortcut_name = name.get()
@@ -79,8 +79,8 @@ def show(shortcut_type: str, path: str):
         if shortcut_type == "folder": util.create_folder_shortcut(path, shortcut_name, shortcut_icon, shortcut_icon_index)
         else: util.create_file_shortcut(path, shortcut_name, shortcut_icon, shortcut_icon_index)
 
-    ok_btn = ttk.Button(window, text = strings.lang.ok, width = "13", default = "active", command = create_shortcut).pack(side = "right", padx = (8, 0))
-    cancel_btn = ttk.Button(window, text = strings.lang.cancel, width = "13", command = window.destroy).pack(side = "right")
+    ok_btn = ttk.Button(window, text = strings.lang.ok, default = "active", command = create_shortcut).pack(side = "right", padx = (8, 0))
+    cancel_btn = ttk.Button(window, text = strings.lang.cancel, command = window.destroy).pack(side = "right")
 
     if shortcut_type == "folder": show_change_icon_btn()
     else: update_icon("C:/Windows/System32/shell32.dll", 0)
