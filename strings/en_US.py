@@ -13,6 +13,7 @@ pin_to_taskbar_a_shortcut_to = "Pin to taskbar a shortcut to:"
 a_file = "A file"
 a_folder = "A folder"
 pin_separator = "Pin separator"
+settings = "Settings"
 
 # Pin separator window
 choose_a_separator_type = "Choose a separator type:"
@@ -28,6 +29,7 @@ change_icon = "Change icon"
 
 # Other
 open_source_licenses = "Open source licenses"
+change_language = "Change language"
 ok = "OK"
 cancel = "Cancel"
 shortcut_created_message = "The shortcut has been created.\n\nNow, drag the shortcut from the folder that was opened to your taskbar and then close the File Explorer window.\n\nYou have to do this extra step, because it's not that easy for 3rd party programs to pin a shortcut to the taskbar on Windows 10 and 11."
