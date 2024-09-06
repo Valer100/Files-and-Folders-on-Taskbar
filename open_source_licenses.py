@@ -6,7 +6,7 @@ strings.load_language(open(util.user_preferences + "\\language", "r").read())
 
 def show():
     window = tk.Toplevel()
-    window.title("Open source licenses")
+    window.title(strings.lang.open_source_licenses)
     window.resizable(False, False)
     window.iconbitmap(util.internal + "icon.ico")
     window.configure(padx = 16, pady = 0)
