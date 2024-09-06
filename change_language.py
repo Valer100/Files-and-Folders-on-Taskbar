@@ -19,7 +19,7 @@ def show():
 
     ttk.Label(window, text = strings.lang.change_language, font = ("Segoe UI Semibold", 17)).pack(anchor = "w", pady = 8, padx = (0, 128))
 
-    ttk.Radiobutton(window, text = "System default", value = "default", variable = language).pack(anchor = "w")
+    ttk.Radiobutton(window, text = strings.lang.lang_system_default, value = "default", variable = language).pack(anchor = "w")
     ttk.Radiobutton(window, text = strings.en_US.language, value = "en_US", variable = language).pack(anchor = "w")
     ttk.Radiobutton(window, text = strings.ro_RO.language, value = "ro_RO", variable = language).pack(anchor = "w")
 

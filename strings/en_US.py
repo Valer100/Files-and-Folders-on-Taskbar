@@ -30,6 +30,7 @@ change_icon = "Change icon"
 # Other
 open_source_licenses = "Open source licenses"
 change_language = "Change language"
+lang_system_default = "System default"
 ok = "OK"
 cancel = "Cancel"
 shortcut_created_message = "The shortcut has been created.\n\nNow, drag the shortcut from the folder that was opened to your taskbar and then close the File Explorer window.\n\nYou have to do this extra step, because it's not that easy for 3rd party programs to pin a shortcut to the taskbar on Windows 10 and 11."

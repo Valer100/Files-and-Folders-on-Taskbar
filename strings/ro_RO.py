@@ -30,6 +30,7 @@ change_icon = "Modifică pictograma"
 # Other
 open_source_licenses = "Licențe open source"
 change_language = "Schimbă limba"
+lang_system_default = "Prestabilită de sistem"
 ok = "OK"
 cancel = "Anulare"
 shortcut_created_message = "Scurtătura a fost creată.\n\nAcum, trage scurtătura din folderul care s-a deschis pe taskbar-ul tău și apoi închide fereastra File Explorer-ului.\n\nTrebuie să faci acest pas în plus, deoarece nu este foarte ușor pentru programe 3rd party să fixeze o scurtătură pe taskbar pe Windows 10 și 11."
