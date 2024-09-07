@@ -43,8 +43,8 @@ def show(shortcut_type: str, path: str):
         shortcut_icon = icon_path
         shortcut_icon_index = icon_index
 
-    name = ttk.Entry(shortcut_info, font = ("Default", 10))
-    name.pack(side = "left", padx = (16, 0), fill = "x", expand = True)
+    name = ttk.Entry(shortcut_info, font = ("Default", 10), width = 50)
+    name.pack(side = "left", padx = (16, 0))
     
     path_list = path.split("/")
     name.insert(0, path_list[len(path_list) - 1])
@@ -63,14 +63,14 @@ def show(shortcut_type: str, path: str):
         ttk.Checkbutton(window, text = strings.lang.use_folder_icon, variable = use_folder_icon, command = show_change_icon_btn).pack(pady = (8, 0), anchor = "w")
 
     buttons = ttk.Frame(window)
-    buttons.pack(pady = (16, 10))
+    buttons.pack(pady = (16, 10), fill = "x", expand = True)
 
     def change_icon():
         shortcut_icon, shortcut_icon_index = util.pick_icon()
         update_icon(shortcut_icon, shortcut_icon_index)
 
     change_icon_btn = ttk.Button(buttons, text = strings.lang.change_icon, command = change_icon)
-    change_icon_btn.pack(side = "left", padx = (0, 64))
+    change_icon_btn.pack(side = "left")
 
     def create_shortcut():
         shortcut_name = name.get()
