@@ -12,6 +12,7 @@ see_open_source_licenses = "Vezi licențele open source"
 pin_to_taskbar_a_shortcut_to = "Fixează pe taskbar o scurtătură către:"
 a_file = "Un fișier"
 a_folder = "Un folder"
+a_separator = "Un separator"
 pin_separator = "Fixează separator"
 settings = "Setări"
 

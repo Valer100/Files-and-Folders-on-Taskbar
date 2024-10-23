@@ -12,6 +12,7 @@ see_open_source_licenses = "See open source licenses"
 pin_to_taskbar_a_shortcut_to = "Pin to taskbar a shortcut to:"
 a_file = "A file"
 a_folder = "A folder"
+a_separator = "A separator"
 pin_separator = "Pin separator"
 settings = "Settings"
 
