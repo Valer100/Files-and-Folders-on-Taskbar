@@ -1,11 +1,11 @@
-import tkinter as tk, util, strings, os
+import tkinter as tk, util, strings, custom_ui
 from tkinter import ttk
 from tkinter.scrolledtext import ScrolledText
 
 strings.load_language(open(util.user_preferences + "\\language", "r").read())
 
 def show():
-    window = tk.Toplevel()
+    window = custom_ui.Toplevel()
     window.title(strings.lang.open_source_licenses)
     window.resizable(False, False)
     window.iconbitmap(util.internal + "icon.ico")

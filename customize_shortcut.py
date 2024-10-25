@@ -1,4 +1,4 @@
-import tkinter as tk, util, strings
+import tkinter as tk, util, strings, custom_ui
 from tkinter import ttk
 from PIL import Image
 
@@ -10,7 +10,7 @@ def show(shortcut_type: str, path: str):
     shortcut_icon = ""
     shortcut_icon_index = 0
 
-    window = tk.Toplevel()
+    window = custom_ui.Toplevel()
     window.title(strings.lang.customize_shortcut)
     window.resizable(False, False)
     window.iconbitmap(util.internal + "icon.ico")

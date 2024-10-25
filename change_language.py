@@ -1,6 +1,5 @@
-import strings.en_US
-import strings.ro_RO
-import tkinter as tk, util, strings
+import strings.en_US, strings.ro_RO
+import tkinter as tk, util, strings, custom_ui
 from tkinter import ttk
 
 strings.load_language(open(util.user_preferences + "\\language", "r").read())
@@ -9,7 +8,7 @@ window = None
 def show():
     global window
 
-    window = tk.Toplevel()
+    window = custom_ui.Toplevel()
     window.title(strings.lang.change_language)
     window.resizable(False, False)
     window.iconbitmap(util.internal + "icon.ico")

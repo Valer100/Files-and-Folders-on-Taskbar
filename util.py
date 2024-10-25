@@ -1,6 +1,4 @@
-import random, win32com.client, win32ui, win32gui, subprocess, ctypes, os, getpass, strings
-import tkinter as tk
-from tkinter import ttk
+import random, win32com.client, win32ui, win32gui, subprocess, ctypes, os, sys, getpass, strings, pywinstyles, winaccent
 from PIL import Image
 
 if os.path.exists("icon.ico"): internal = ""
@@ -141,50 +139,3 @@ def get_folder_icon(folder_path: str) -> str:
             folder_icon = (_folder_icon.replace("," + str(_folder_icon_index), ""), _folder_icon_index)
     
     return folder_icon
-
-class CommandLink(tk.Frame):
-    def __init__(self, master, text: str = "", command: callable = None, *args, **kwargs):
-        super().__init__(master, padx = 8, pady = 4, *args, **kwargs)
-
-        arrow = ttk.Label(self, text = "\ue651  ", font = ("Segoe UI", 11), padding = (0, 4, 0, 0), foreground = "SystemHighlight")
-        arrow.pack(side = "left", anchor = "w")
-
-        text = ttk.Label(self, text = text, font = ("Segoe UI Semibold", 11), foreground = "SystemHighlight")
-        text.pack(side = "left", anchor = "w")
-
-        def on_enter(event):
-            self.configure(background = "#e0e0e0")
-            arrow.configure(background = "#e0e0e0")
-            text.configure(background = "#e0e0e0")
-
-        def on_leave(event):
-            self.configure(background = "SystemButtonFace")
-            arrow.configure(background = "SystemButtonFace")
-            text.configure(background = "SystemButtonFace")
-
-        def on_click(event):
-            self.configure(background = "#cecece")
-            arrow.configure(background = "#cecece")
-            text.configure(background = "#cecece")
-
-        def on_click_release(event):
-            self.configure(background = "#e0e0e0")
-            arrow.configure(background = "#e0e0e0")
-            text.configure(background = "#e0e0e0")
-
-            if not command is None: command()
-
-        self.bind("<Enter>", on_enter)
-        self.bind("<Leave>", on_leave)
-        self.bind("<Button-1>", on_click)
-        self.bind("<ButtonRelease-1>", on_click_release)
-
-        arrow.bind("<Enter>", on_enter)
-        arrow.bind("<Leave>", on_leave)
-        arrow.bind("<Button-1>", on_click)
-        arrow.bind("<ButtonRelease-1>", on_click_release)
-
-        text.bind("<Enter>", on_enter)
-        text.bind("<Leave>", on_leave)
-        text.bind("<Button-1>", on_click)
-        text.bind("<ButtonRelease-1>", on_click_release)

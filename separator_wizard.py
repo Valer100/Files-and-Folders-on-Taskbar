@@ -1,10 +1,10 @@
-import tkinter as tk, util, strings
+import tkinter as tk, util, strings, custom_ui
 from tkinter import ttk
 
 strings.load_language(open(util.user_preferences + "\\language", "r").read())
 
 def show():
-    window = tk.Toplevel()
+    window = custom_ui.Toplevel()
     window.title(strings.lang.pin_separator)
     window.resizable(False, False)
     window.iconbitmap(util.internal + "icon.ico")

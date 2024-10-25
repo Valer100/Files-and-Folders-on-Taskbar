@@ -1,7 +1,7 @@
-import tkinter as tk, subprocess, shutil, util, separator_wizard, customize_shortcut, open_source_licenses, change_language, strings
+import tkinter as tk, subprocess, shutil, util, separator_wizard, customize_shortcut, open_source_licenses, change_language, strings, custom_ui
 from tkinter import ttk, filedialog
 
-window = tk.Tk()
+window = custom_ui.App()
 window.title("Files & Folders on Taskbar")
 window.resizable(False, False)
 window.iconbitmap(util.internal + "icon.ico")
@@ -42,16 +42,13 @@ def draw_ui():
 
     ttk.Label(window, text = strings.lang.pin_to_taskbar_a_shortcut_to).pack(anchor = "w", pady = (4, 8))
 
-    util.CommandLink(window, text = strings.lang.a_file, command = lambda: browse("file")).pack(fill = "x", expand = True)
-    util.CommandLink(window, text = strings.lang.a_folder, command = lambda: browse("folder")).pack(fill = "x", expand = True)
-    util.CommandLink(window, text = strings.lang.a_separator, command = separator_wizard.show).pack(fill = "x", expand = True)
-
-    style = ttk.Style()
-    style.configure("Highlight.Toolbutton", foreground = "SystemHighlight")
+    custom_ui.CommandLink(window, text = strings.lang.a_file, command = lambda: browse("file")).pack(fill = "x", expand = True)
+    custom_ui.CommandLink(window, text = strings.lang.a_folder, command = lambda: browse("folder")).pack(fill = "x", expand = True)
+    custom_ui.CommandLink(window, text = strings.lang.a_separator, command = separator_wizard.show).pack(fill = "x", expand = True)
 
     ttk.Label(window, text = strings.lang.settings, font = ("Segoe UI Semibold", 14)).pack(anchor = "w", pady = (16, 4))
-    ttk.Button(window, text = strings.lang.change_language, style = "Highlight.Toolbutton", command = change_app_language).pack(anchor = "w")
-    ttk.Button(window, text = strings.lang.see_open_source_licenses, style = "Highlight.Toolbutton", command = open_source_licenses.show).pack(anchor = "w")
+    custom_ui.Toolbutton(window, text = strings.lang.change_language, command = change_app_language).pack(anchor = "w")
+    custom_ui.Toolbutton(window, text = strings.lang.see_open_source_licenses, command = open_source_licenses.show).pack(anchor = "w")
 
     window.update()
 
