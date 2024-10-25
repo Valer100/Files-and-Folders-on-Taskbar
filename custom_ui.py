@@ -1,11 +1,16 @@
 import tkinter as tk, pywinstyles, winaccent, sys
 from tkinter import ttk
 
+entry_select = winaccent.accent_normal
+
 if winaccent.apps_use_light_theme:
     bg = "#f0f0f0"
     bg_hover = "#e0e0e0"
     bg_press = "#cecece"
     fg = "#000000"
+    entry_focus = winaccent.accent_normal
+    entry_bd = "#8d8d8d"
+    entry_bg = "#ffffff"
     accent = winaccent.accent_dark
     accent_link = winaccent.accent_dark_2
 else:
@@ -13,6 +18,9 @@ else:
     bg_hover = "#292929"
     bg_press = "#333333"
     fg = "#ffffff"
+    entry_focus = "#ffffff"
+    entry_bd = "#6e6e6e"
+    entry_bg = "#404040"
     accent = winaccent.accent_light
     accent_link = winaccent.accent_light_3
 
