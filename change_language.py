@@ -23,7 +23,7 @@ def show():
     ttk.Radiobutton(window, text = strings.ro_RO.language, value = "ro_RO", variable = language).pack(anchor = "w")
 
     buttons = ttk.Frame(window)
-    buttons.pack(pady = (16, 10), anchor = "e")
+    buttons.pack(pady = 16, anchor = "e")
 
     def apply_language():
         open(util.user_preferences + "\\language", "w").write(language.get())

@@ -20,6 +20,6 @@ def show():
     ttk.Radiobutton(window, text = strings.lang.transparent, variable = separator_type, value = "transparent").pack(anchor = "w")
 
     pin_separator_btn = ttk.Button(window, text = strings.lang.create_the_shortcut, default = "active", command = lambda: util.create_separator_shortcut(separator_type.get()))
-    pin_separator_btn.pack(fill = "x", pady = (12, 4))
+    pin_separator_btn.pack(fill = "x", pady = (16, 8))
 
     window.focus_set()
