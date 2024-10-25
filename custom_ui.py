@@ -11,6 +11,11 @@ if winaccent.apps_use_light_theme:
     entry_focus = winaccent.accent_normal
     entry_bd = "#8d8d8d"
     entry_bg = "#ffffff"
+    button_bg = "#ffffff"
+    button_hover = "#ebebeb"
+    button_press = "#dbdbdb"
+    button_bd = "#d0d0d0"
+    button_bd_active = winaccent.accent_normal
     accent = winaccent.accent_dark
     accent_link = winaccent.accent_dark_2
 else:
@@ -21,6 +26,11 @@ else:
     entry_focus = "#ffffff"
     entry_bd = "#6e6e6e"
     entry_bg = "#404040"
+    button_bg = "#333333"
+    button_hover = "#454545"
+    button_press = "#676767"
+    button_bd = "#9b9b9b"
+    button_bd_active = "#ffffff"
     accent = winaccent.accent_light
     accent_link = winaccent.accent_light_3
 
@@ -28,10 +38,10 @@ class CommandLink(tk.Frame):
     def __init__(self, master, text: str = "", command: callable = None, *args, **kwargs):
         super().__init__(master, padx = 8, pady = 4, background = bg, *args, **kwargs)
 
-        arrow = ttk.Label(self, text = "\ue651  ", font = ("Segoe UI", 11), padding = (0, 4, 0, 0), foreground = accent)
+        arrow = ttk.Label(self, text = "\ue651  ", font = ("Segoe UI", 11), padding = (0, 4, 0, 0), foreground = accent_link)
         arrow.pack(side = "left", anchor = "w")
 
-        text = ttk.Label(self, text = text, font = ("Segoe UI Semibold", 11), foreground = accent)
+        text = ttk.Label(self, text = text, font = ("Segoe UI Semibold", 11), foreground = accent_link)
         text.pack(side = "left", anchor = "w")
 
         def on_enter(event):
@@ -79,6 +89,24 @@ class Toolbutton(tk.Button):
         
         self.bind("<Enter>", lambda event: self.configure(background = bg_hover))
         self.bind("<Leave>", lambda event: self.configure(background = bg))
+
+class Button(tk.Button):
+    def __init__(self, master, text: str = "", command: callable = None, *args, **kwargs):
+        super().__init__(master, text = text, command = command, padx = 4, pady = 3, background = button_bg, 
+                         foreground = fg, border = 0, relief = "solid", activebackground = button_press, 
+                         activeforeground = fg, highlightthickness = 1, highlightbackground = button_bd,
+                         highlightcolor = button_bd, *args, **kwargs)
+        
+        if len(self["text"]) >= 10: self.configure(width = len(self["text"]))
+        else: self.configure(width = 10)
+
+        if self["default"] == "active": self.configure(highlightbackground = button_bd_active, highlightcolor = button_bd_active)
+        else: self.configure(default = "active")
+
+        self.bind("<Enter>", lambda event: self.configure(background = button_hover))
+        self.bind("<Leave>", lambda event: self.configure(background = button_bg))
+
+ttk.Button = Button
 
 class App(tk.Tk):
     def set_titlebar_theme(self):
