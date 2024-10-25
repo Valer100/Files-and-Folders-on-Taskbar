@@ -12,8 +12,8 @@ shortcut_type = tk.StringVar(value = "file")
 subprocess.call(f"rmdir /q /s \"{util.working_folder}\\separators\"", shell = True)
 shutil.copytree(util.internal + "separators", util.working_folder + "\\separators")
 
-def browse():
-    if shortcut_type.get() == "file":
+def browse(shortcut_type):
+    if shortcut_type == "file":
         file = filedialog.askopenfile(title = strings.lang.choose_a_file, parent = window)
 
         if not file.name == "": customize_shortcut.show("file", file.name)
@@ -26,8 +26,7 @@ def browse():
 
 def destroy_everything(widget):
     for child in widget.winfo_children():
-        if isinstance(child, (tk.Frame, ttk.Frame)): destroy_everything(child)
-        else: child.destroy()
+        child.destroy()
 
 def change_app_language():
     change_language.show()
@@ -36,25 +35,16 @@ def change_app_language():
     draw_ui()
 
 def draw_ui():
-    def file_selected(): pin_it_btn["text"] = strings.lang.choose_a_file_pin
-    def folder_selected(): pin_it_btn["text"] = strings.lang.choose_a_folder_pin
-
     destroy_everything(window)
     strings.load_language(open(util.user_preferences + "\\language", "r").read())
 
     ttk.Label(window, text = "Files & Folders on Taskbar", font = ("Segoe UI Semibold", 17)).pack(anchor = "w")
 
     ttk.Label(window, text = strings.lang.pin_to_taskbar_a_shortcut_to).pack(anchor = "w", pady = (4, 8))
-    ttk.Radiobutton(window, text = strings.lang.a_file, variable = shortcut_type, value = "file", command = file_selected).pack(anchor = "w")
-    ttk.Radiobutton(window, text = strings.lang.a_folder, variable = shortcut_type, value = "folder", command = folder_selected).pack(anchor = "w")
 
-    pin_it_btn = ttk.Button(window, text = strings.lang.choose_a_file_pin, default = "active", command = browse)
-    pin_it_btn.pack(fill = "x", pady = (16, 0))
-
-    if shortcut_type.get() == "folder": folder_selected()
-
-    pin_separator_btn = ttk.Button(window, text = strings.lang.pin_separator, command = separator_wizard.show)
-    pin_separator_btn.pack(fill = "x", pady = 4)
+    util.CommandLink(window, text = strings.lang.a_file, command = lambda: browse("file")).pack(fill = "x", expand = True)
+    util.CommandLink(window, text = strings.lang.a_folder, command = lambda: browse("folder")).pack(fill = "x", expand = True)
+    util.CommandLink(window, text = strings.lang.a_separator, command = separator_wizard.show).pack(fill = "x", expand = True)
 
     style = ttk.Style()
     style.configure("Highlight.Toolbutton", foreground = "SystemHighlight")
