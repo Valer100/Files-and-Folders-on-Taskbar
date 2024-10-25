@@ -36,9 +36,15 @@ else:
 
 class CommandLink(tk.Frame):
     def __init__(self, master, text: str = "", command: callable = None, *args, **kwargs):
-        super().__init__(master, padx = 8, pady = 4, background = bg, *args, **kwargs)
+        super().__init__(master, padx = 8, pady = 8, background = bg, *args, **kwargs)
 
-        arrow = ttk.Label(self, text = "\ue651  ", font = ("Segoe UI", 11), padding = (0, 4, 0, 0), foreground = accent_link)
+        ver = sys.getwindowsversion()
+
+        if ver.major == 10 and ver.build >= 22000:
+            arrow = ttk.Label(self, text = "\ue651  ", font = ("Segoe Fluent Icons", 11), padding = (0, 4, 0, 0), foreground = accent_link)
+        else:
+            arrow = ttk.Label(self, text = "\ue0ad  ", font = ("Segoe MDL2 Assets", 11), padding = (0, 4, 0, 0), foreground = accent_link)
+        
         arrow.pack(side = "left", anchor = "w")
 
         text = ttk.Label(self, text = text, font = ("Segoe UI Semibold", 11), foreground = accent_link)
@@ -110,7 +116,7 @@ ttk.Button = Button
 
 class App(tk.Tk):
     def set_titlebar_theme(self):
-        pywinstyles.apply_style(self, "dark" if winaccent.apps_use_light_theme == "dark" else "normal")
+        pywinstyles.apply_style(self, "light" if winaccent.apps_use_light_theme else "dark")
         pywinstyles.change_header_color(self, bg)
 
         version = sys.getwindowsversion()
@@ -141,7 +147,7 @@ class App(tk.Tk):
 
 class Toplevel(tk.Toplevel):
     def set_titlebar_theme(self):
-        pywinstyles.apply_style(self, "dark" if winaccent.apps_use_light_theme == "dark" else "normal")
+        pywinstyles.apply_style(self, "light" if winaccent.apps_use_light_theme else "dark")
         pywinstyles.change_header_color(self, bg)
 
         version = sys.getwindowsversion()
