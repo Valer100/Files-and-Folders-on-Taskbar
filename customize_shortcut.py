@@ -21,7 +21,7 @@ def show(shortcut_type: str, path: str):
     shortcut_info = ttk.Frame(window)
     shortcut_info.pack(fill = "x", expand = True, pady = (16, 0))
 
-    icon = tk.Canvas(shortcut_info, width = 32, height = 32, bd = 0, highlightthickness = 0)
+    icon = tk.Canvas(shortcut_info, width = 32, height = 32, bd = 0, highlightthickness = 0, background = custom_ui.bg)
     icon.pack(side = "left")
 
     def update_icon(icon_path: str, icon_index: int = 0):
@@ -43,8 +43,16 @@ def show(shortcut_type: str, path: str):
         shortcut_icon = icon_path
         shortcut_icon_index = icon_index
 
-    name = ttk.Entry(shortcut_info, font = ("Default", 10), width = 50)
-    name.pack(side = "left", padx = (16, 0))
+    name_rame = tk.Frame(shortcut_info, highlightbackground = custom_ui.entry_bd, highlightcolor = custom_ui.entry_focus,
+                          highlightthickness = 1)
+    name_rame.pack(anchor = "w", padx = (16, 0), side = "left")
+
+    name = tk.Entry(name_rame, width = 50, font = ("Default", 10), background = custom_ui.entry_bg, 
+                    foreground = custom_ui.fg, border = 0, highlightthickness = 2, 
+                    highlightcolor = custom_ui.entry_bg, highlightbackground = custom_ui.entry_bg, 
+                    insertbackground = custom_ui.fg, insertwidth = 1, selectbackground = custom_ui.entry_select,
+                    selectforeground = "#FFFFFF")
+    name.pack()
     
     path_list = path.split("/")
     name.insert(0, path_list[len(path_list) - 1])
