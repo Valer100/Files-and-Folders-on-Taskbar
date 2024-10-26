@@ -14,7 +14,9 @@ if not os.path.exists(user_preferences + "\\language"): open(user_preferences + 
 if not os.path.exists(user_preferences + "\\theme"): open(user_preferences + "\\theme", "w").write("default")
 
 theme = open(user_preferences + "\\theme", "r").read()
-strings.load_language(open(user_preferences + "\\language", "r").read())
+language = open(user_preferences + "\\language", "r").read()
+
+strings.load_language(language)
 
 def pick_icon() -> str:
     delete_remnants()
