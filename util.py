@@ -149,7 +149,7 @@ def sanitize_filename(name: str) -> str:
                      "lpt9"]
     
     for character in name:
-        if character in illegal_characters: name.replace(character, "_")
+        if character in illegal_characters: name = name.replace(character, "_")
 
     for illegal_name in illegal_names:
         if name == illegal_name: name = illegal_name + "_"
