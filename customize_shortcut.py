@@ -1,5 +1,5 @@
 import tkinter as tk, util, strings, custom_ui
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from PIL import Image
 
 strings.load_language(open(util.user_preferences + "\\language", "r").read())
@@ -81,7 +81,11 @@ def show(shortcut_type: str, path: str):
     change_icon_btn.pack(side = "left")
 
     def create_shortcut():
-        shortcut_name = name.get()
+        shortcut_name = util.sanitize_filename(name.get())
+
+        if name.get() != shortcut_name:
+            messagebox.showwarning(parent = window, title = strings.lang.shortcut_name_invalid, message = strings.lang.shortcut_name_invalid_description)
+
         window.destroy()
         
         if shortcut_type == "folder": util.create_folder_shortcut(path, shortcut_name, shortcut_icon, shortcut_icon_index)
