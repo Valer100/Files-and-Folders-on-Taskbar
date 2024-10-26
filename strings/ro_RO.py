@@ -30,7 +30,7 @@ change_icon = "Modifică pictograma"
 illegal_characters = "\\, /, :, *, ?, <, >, |"
 illegal_names = "nul, con, prn, aux, com1, com2, com3, com4, com5, com6, com7, com8, com9, lpt1, lpt2, lpt3, lpt4, lpt5, lpt6, lpt7, lpt8, lpt9"
 shortcut_name_invalid = "Nume scurtătură invalid"
-shortcut_name_invalid_description = f"Numele scurtăturii conține caractere ilegale, precum {illegal_characters} sau utilizează un nume rezervat de sistem, precum {illegal_names}. Acestea for fi înlocuite cu un underscore (_)."
+shortcut_name_invalid_description = f"Numele scurtăturii conține caractere ilegale, precum {illegal_characters} sau utilizează un nume rezervat de sistem, precum {illegal_names}. \n\nCaracterele ilegale vor fi înlocuite cu un underscore (_) și numelor rezervate li se va adăuga la final un underscore (_)."
 
 # Other
 open_source_licenses = "Licențe open source"
