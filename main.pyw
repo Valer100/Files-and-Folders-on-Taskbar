@@ -29,18 +29,23 @@ def destroy_everything(widget):
         child.destroy()
 
 def change_app_language():
+    old_language = util.language
+
     change_language.show()
     window.wait_window(change_language.window)
 
-    draw_ui()
+    if old_language != util.language: draw_ui()
 
 def change_app_theme():
+    old_theme = util.theme
+
     change_theme.show()
     window.wait_window(change_theme.window)
 
-    custom_ui.update_colors()
-    window.set_theme()
-    draw_ui()
+    if old_theme != util.theme:
+        custom_ui.update_colors()
+        window.set_theme()
+        draw_ui()
 
 def draw_ui():
     destroy_everything(window)
