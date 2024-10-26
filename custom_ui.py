@@ -1,4 +1,4 @@
-import tkinter as tk, pywinstyles, winaccent, sys
+import tkinter as tk, pywinstyles, winaccent, sys, hPyT
 from tkinter import ttk
 
 entry_select = winaccent.accent_normal
@@ -147,6 +147,8 @@ class App(tk.Tk):
 
 class Toplevel(tk.Toplevel):
     def set_titlebar_theme(self):
+        self.update()
+
         pywinstyles.apply_style(self, "light" if winaccent.apps_use_light_theme else "dark")
         pywinstyles.change_header_color(self, bg)
 
@@ -157,10 +159,14 @@ class Toplevel(tk.Toplevel):
             self.wm_attributes("-alpha", 0.99)
             self.wm_attributes("-alpha", 1)
 
+        hPyT.maximize_minimize_button.hide(self)
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.update()
+        self.grab_set()
+        self.focus_set()
+        self.bind("<Escape>", lambda event: self.destroy())
         self.configure(background = bg)
         self.set_titlebar_theme()
 
