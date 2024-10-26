@@ -1,4 +1,4 @@
-import tkinter as tk, subprocess, shutil, util, separator_wizard, customize_shortcut, open_source_licenses, change_language, strings, custom_ui
+import tkinter as tk, subprocess, shutil, util, separator_wizard, customize_shortcut, open_source_licenses, change_language, change_theme, strings, custom_ui
 from tkinter import ttk, filedialog
 
 window = custom_ui.App()
@@ -34,6 +34,14 @@ def change_app_language():
 
     draw_ui()
 
+def change_app_theme():
+    change_theme.show()
+    window.wait_window(change_theme.window)
+
+    custom_ui.update_colors()
+    window.set_theme()
+    draw_ui()
+
 def draw_ui():
     destroy_everything(window)
     strings.load_language(open(util.user_preferences + "\\language", "r").read())
@@ -48,6 +56,7 @@ def draw_ui():
 
     ttk.Label(window, text = strings.lang.settings, font = ("Segoe UI Semibold", 14)).pack(anchor = "w", pady = (16, 4))
     custom_ui.Toolbutton(window, text = strings.lang.change_language, command = change_app_language).pack(anchor = "w")
+    custom_ui.Toolbutton(window, text = strings.lang.change_theme, command = change_app_theme).pack(anchor = "w")
     custom_ui.Toolbutton(window, text = strings.lang.see_open_source_licenses, command = open_source_licenses.show).pack(anchor = "w")
 
     window.update()

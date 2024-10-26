@@ -11,7 +11,9 @@ script_template_2 = "WScript.CreateObject(\"WScript.Shell\").Run \"(command)\", 
 
 if not os.path.exists(user_preferences): os.mkdir(user_preferences)
 if not os.path.exists(user_preferences + "\\language"): open(user_preferences + "\\language", "w").write("default")
+if not os.path.exists(user_preferences + "\\theme"): open(user_preferences + "\\theme", "w").write("default")
 
+theme = open(user_preferences + "\\theme", "r").read()
 strings.load_language(open(user_preferences + "\\language", "r").read())
 
 def pick_icon() -> str:
