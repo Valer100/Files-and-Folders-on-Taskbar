@@ -8,14 +8,14 @@ if winaccent.apps_use_light_theme:
     bg_hover = "#e0e0e0"
     bg_press = "#cecece"
     fg = "#000000"
-    entry_focus = winaccent.accent_normal
+    entry_focus = winaccent.accent_dark
     entry_bd = "#8d8d8d"
     entry_bg = "#ffffff"
     button_bg = "#ffffff"
     button_hover = "#ebebeb"
     button_press = "#dbdbdb"
     button_bd = "#d0d0d0"
-    button_bd_active = winaccent.accent_normal
+    button_bd_active = winaccent.accent_dark
     accent = winaccent.accent_dark
     accent_link = winaccent.accent_dark_2
 else:
