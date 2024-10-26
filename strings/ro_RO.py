@@ -6,8 +6,6 @@ author = "Valer100"
 # Main window
 choose_a_file = "Alege un fișier"
 choose_a_folder = "Alege un folder"
-choose_a_file_pin = "Alege un fișier și fixează-l pe taskbar"
-choose_a_folder_pin = "Alege un folder și fixează-l pe taskbar"
 see_open_source_licenses = "Vezi licențele open source"
 pin_to_taskbar_a_shortcut_to = "Fixează pe taskbar o scurtătură către:"
 a_file = "Un fișier"
@@ -35,6 +33,9 @@ shortcut_name_invalid_description = f"Numele scurtăturii conține caractere ile
 # Other
 open_source_licenses = "Licențe open source"
 change_language = "Schimbă limba"
+change_theme = "Schimbă tema"
+light_theme = "Temă luminoasă"
+dark_theme = "Temă întunecată"
 lang_system_default = "Prestabilită de sistem"
 ok = "OK"
 cancel = "Anulare"

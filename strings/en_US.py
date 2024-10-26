@@ -6,8 +6,6 @@ author = "Valer100"
 # Main window
 choose_a_file = "Choose a file"
 choose_a_folder = "Choose a folder"
-choose_a_file_pin = "Choose a file & pin it to taskbar"
-choose_a_folder_pin = "Choose a folder & pin it to taskbar"
 see_open_source_licenses = "See open source licenses"
 pin_to_taskbar_a_shortcut_to = "Pin to taskbar a shortcut to:"
 a_file = "A file"
@@ -35,6 +33,9 @@ shortcut_name_invalid_description = f"The shortcut's name contains illegal chara
 # Other
 open_source_licenses = "Open source licenses"
 change_language = "Change language"
+change_theme = "Change theme"
+light_theme = "Light theme"
+dark_theme = "Dark theme"
 lang_system_default = "System default"
 ok = "OK"
 cancel = "Cancel"
