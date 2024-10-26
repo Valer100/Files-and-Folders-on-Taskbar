@@ -14,9 +14,9 @@ def show():
     window.iconbitmap(util.internal + "icon.ico")
     window.configure(padx = 16, pady = 0)
 
-    theme = tk.StringVar(value = open(util.user_preferences + "\\theme", "r").read())
+    theme = tk.StringVar(value = util.theme)
 
-    ttk.Label(window, text = strings.lang.change_theme, font = ("Segoe UI Semibold", 17)).pack(anchor = "w", pady = 8, padx = (0, 128))
+    ttk.Label(window, width = 25, text = strings.lang.change_theme, font = ("Segoe UI Semibold", 17)).pack(anchor = "w", pady = 8)
 
     ttk.Radiobutton(window, text = strings.lang.lang_system_default, value = "default", variable = theme).pack(anchor = "w")
     ttk.Radiobutton(window, text = strings.lang.light_theme, value = "light", variable = theme).pack(anchor = "w")
