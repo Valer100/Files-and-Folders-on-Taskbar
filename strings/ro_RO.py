@@ -16,8 +16,8 @@ settings = "Setări"
 
 # Pin separator window
 choose_a_separator_type = "Alege un tip de separator:"
-vertical_line = "Linie verticală (potrivit pentru taskbar-uri orizontale)"
-horizontal_line = "Linie orizontală (potrivit pentru taskbar-uri verticale)"
+vertical_line = "Linie verticală"
+horizontal_line = "Linie orizontală"
 transparent = "Transparent"
 create_the_shortcut = "Creează scurtătura"
 

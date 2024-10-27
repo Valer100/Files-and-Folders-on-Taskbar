@@ -16,8 +16,8 @@ settings = "Settings"
 
 # Pin separator window
 choose_a_separator_type = "Choose a separator type:"
-vertical_line = "Vertical line (suitable for horizontal taskbars)"
-horizontal_line = "Horizontal line (suitable for vertical taskbars)"
+vertical_line = "Vertical line"
+horizontal_line = "Horizontal line"
 transparent = "Transparent"
 create_the_shortcut = "Create the shortcut"
 
