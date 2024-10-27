@@ -122,8 +122,9 @@ class Button(tk.Button):
                          activeforeground = fg, highlightthickness = 1, highlightbackground = button_bd,
                          highlightcolor = button_bd, *args, **kwargs)
         
-        if len(self["text"]) >= 10: self.configure(width = len(self["text"]))
-        else: self.configure(width = 10)
+        if self["width"] == 0:
+            if len(self["text"]) >= 10: self.configure(width = len(self["text"]))
+            else: self.configure(width = 10)
 
         if self["default"] == "active": self.configure(highlightbackground = button_bd_active, highlightcolor = button_bd_active)
         else: self.configure(default = "active")
