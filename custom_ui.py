@@ -56,27 +56,40 @@ class CommandLink(tk.Frame):
         text = ttk.Label(self, text = text, font = ("Segoe UI Semibold", 11), foreground = accent_link)
         text.pack(side = "left", anchor = "w")
 
+        is_touched = False
+
         def on_enter(event):
+            global is_touched
+            is_touched = True
+
             self.configure(background = bg_hover)
             arrow.configure(background = bg_hover)
             text.configure(background = bg_hover)
 
         def on_leave(event):
+            global is_touched
+            is_touched = False
+
             self.configure(background = bg)
             arrow.configure(background = bg)
             text.configure(background = bg)
 
         def on_click(event):
+            global is_touched
+            is_touched = True
+
             self.configure(background = bg_press)
             arrow.configure(background = bg_press)
             text.configure(background = bg_press)
 
         def on_click_release(event):
+            global is_touched
+
             self.configure(background = bg_hover)
             arrow.configure(background = bg_hover)
             text.configure(background = bg_hover)
 
-            if not command is None: command()
+            if not command is None and is_touched: command(); is_touched = False
 
         self.bind("<Enter>", on_enter)
         self.bind("<Leave>", on_leave)
