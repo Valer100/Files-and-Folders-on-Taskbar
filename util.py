@@ -30,7 +30,8 @@ def pick_icon() -> str:
     result = ctypes.windll.shell32.PickIconDlg(None, icon_file_buffer, ctypes.sizeof(icon_file_buffer), ctypes.byref(icon_index))
     if result: return (icon_file_buffer.value, icon_index.value)
 
-def create_separator_shortcut(icon: str):
+def create_separator_shortcut(window, icon: str):
+    window.destroy()
     delete_remnants()
 
     random_number = random.randint(1000000000, 9999999999)
