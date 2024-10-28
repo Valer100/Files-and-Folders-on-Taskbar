@@ -22,9 +22,9 @@ def show():
     separator_horizontal = tk.PhotoImage(file = util.internal + "separators/preview/separator_horizontal.png")
     transparent = tk.PhotoImage(file = util.internal + "separators/preview/transparent.png")
 
-    def create_vertical_separator_shortcut(): util.create_separator_shortcut("vertical"); window.destroy()
-    def create_horizontal_separator_shortcut(): util.create_separator_shortcut("horizontal"); window.destroy()
-    def create_transparent_separator_shortcut(): util.create_separator_shortcut("transparent"); window.destroy()
+    def create_vertical_separator_shortcut(): window.destroy(); util.create_separator_shortcut("vertical")
+    def create_horizontal_separator_shortcut(): window.destroy(); util.create_separator_shortcut("horizontal")
+    def create_transparent_separator_shortcut(): window.destroy(); util.create_separator_shortcut("transparent")
 
     vertical = ttk.Button(separator_types, width = 100, image = separator_vertical, compound = "top",
                           text = strings.lang.vertical_line, command = create_vertical_separator_shortcut)
