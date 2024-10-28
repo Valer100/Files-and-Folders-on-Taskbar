@@ -22,18 +22,22 @@ def show():
     separator_horizontal = tk.PhotoImage(file = util.internal + "separators/preview/separator_horizontal.png")
     transparent = tk.PhotoImage(file = util.internal + "separators/preview/transparent.png")
 
+    def create_vertical_separator_shortcut(): util.create_separator_shortcut("vertical"); window.destroy()
+    def create_horizontal_separator_shortcut(): util.create_separator_shortcut("horizontal"); window.destroy()
+    def create_transparent_separator_shortcut(): util.create_separator_shortcut("transparent"); window.destroy()
+
     vertical = ttk.Button(separator_types, width = 100, image = separator_vertical, compound = "top",
-                          text = strings.lang.vertical_line, command = lambda: util.create_separator_shortcut("vertical"))
+                          text = strings.lang.vertical_line, command = create_vertical_separator_shortcut)
     vertical.pack(side = "left")
     vertical.configure(pady = 8)
 
     horizontal = ttk.Button(separator_types, width = 100, image = separator_horizontal, compound = "top",
-                            text = strings.lang.horizontal_line, command = lambda: util.create_separator_shortcut("horizontal"))
+                            text = strings.lang.horizontal_line, command = create_horizontal_separator_shortcut)
     horizontal.pack(side = "left", padx = (8, 0))
     horizontal.configure(pady = 8)
 
     transparent_b = ttk.Button(separator_types, width = 100, image = transparent, compound = "top",
-                               text = strings.lang.transparent, command = lambda: util.create_separator_shortcut("transparent"))
+                               text = strings.lang.transparent, command = create_transparent_separator_shortcut)
     transparent_b.pack(side = "left", padx = (8, 0))
     transparent_b.configure(pady = 8)
 
