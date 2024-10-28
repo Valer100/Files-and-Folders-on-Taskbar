@@ -1,4 +1,4 @@
-import tkinter as tk, pywinstyles, winaccent, sys, hPyT, util
+import tkinter as tk, pywinstyles, winaccent, sys, hPyT, util, threading
 from tkinter import ttk
 
 entry_select = winaccent.accent_normal
@@ -47,14 +47,14 @@ class CommandLink(tk.Frame):
         ver = sys.getwindowsversion()
 
         if ver.major == 10 and ver.build >= 22000:
-            arrow = ttk.Label(self, text = "\ue651  ", font = ("Segoe Fluent Icons", 11), padding = (0, 4, 0, 0), foreground = accent_link)
+            self.arrow = ttk.Label(self, text = "\ue651  ", font = ("Segoe Fluent Icons", 11), padding = (0, 4, 0, 0), foreground = accent_link)
         else:
-            arrow = ttk.Label(self, text = "\ue0ad  ", font = ("Segoe MDL2 Assets", 11), padding = (0, 4, 0, 0), foreground = accent_link)
+            self.arrow = ttk.Label(self, text = "\ue0ad  ", font = ("Segoe MDL2 Assets", 11), padding = (0, 4, 0, 0), foreground = accent_link)
         
-        arrow.pack(side = "left", anchor = "w")
+        self.arrow.pack(side = "left", anchor = "w")
 
-        text = ttk.Label(self, text = text, font = ("Segoe UI Semibold", 11), foreground = accent_link)
-        text.pack(side = "left", anchor = "w")
+        self.text = ttk.Label(self, text = text, font = ("Segoe UI Semibold", 11), foreground = accent_link)
+        self.text.pack(side = "left", anchor = "w")
 
         is_touched = False
 
@@ -63,31 +63,31 @@ class CommandLink(tk.Frame):
             is_touched = True
 
             self.configure(background = bg_hover)
-            arrow.configure(background = bg_hover)
-            text.configure(background = bg_hover)
+            self.arrow.configure(background = bg_hover)
+            self.text.configure(background = bg_hover)
 
         def on_leave(event):
             global is_touched
             is_touched = False
 
             self.configure(background = bg)
-            arrow.configure(background = bg)
-            text.configure(background = bg)
+            self.arrow.configure(background = bg)
+            self.text.configure(background = bg)
 
         def on_click(event):
             global is_touched
             is_touched = True
 
             self.configure(background = bg_press)
-            arrow.configure(background = bg_press)
-            text.configure(background = bg_press)
+            self.arrow.configure(background = bg_press)
+            self.text.configure(background = bg_press)
 
         def on_click_release(event):
             global is_touched
 
             self.configure(background = bg_hover)
-            arrow.configure(background = bg_hover)
-            text.configure(background = bg_hover)
+            self.arrow.configure(background = bg_hover)
+            self.text.configure(background = bg_hover)
 
             if not command is None and is_touched: command(); is_touched = False
 
@@ -96,15 +96,23 @@ class CommandLink(tk.Frame):
         self.bind("<Button-1>", on_click)
         self.bind("<ButtonRelease-1>", on_click_release)
 
-        arrow.bind("<Enter>", on_enter)
-        arrow.bind("<Leave>", on_leave)
-        arrow.bind("<Button-1>", on_click)
-        arrow.bind("<ButtonRelease-1>", on_click_release)
+        self.arrow.bind("<Enter>", on_enter)
+        self.arrow.bind("<Leave>", on_leave)
+        self.arrow.bind("<Button-1>", on_click)
+        self.arrow.bind("<ButtonRelease-1>", on_click_release)
 
-        text.bind("<Enter>", on_enter)
-        text.bind("<Leave>", on_leave)
-        text.bind("<Button-1>", on_click)
-        text.bind("<ButtonRelease-1>", on_click_release)
+        self.text.bind("<Enter>", on_enter)
+        self.text.bind("<Leave>", on_leave)
+        self.text.bind("<Button-1>", on_click)
+        self.text.bind("<ButtonRelease-1>", on_click_release)
+
+    def update_colors(self):
+        self["background"] = bg
+        self.arrow["background"] = bg
+        self.text["background"] = bg
+
+        self.arrow["foreground"] = accent_link
+        self.text["foreground"] = accent_link
 
 class Toolbutton(tk.Button):
     def __init__(self, master, text: str = "", command: callable = None, *args, **kwargs):
@@ -115,22 +123,34 @@ class Toolbutton(tk.Button):
         self.bind("<Enter>", lambda event: self.configure(background = bg_hover))
         self.bind("<Leave>", lambda event: self.configure(background = bg))
 
+    def update_colors(self):
+        self.configure(background = bg, foreground = accent_link, activebackground = bg_press, activeforeground = accent_link)
+
 class Button(tk.Button):
     def __init__(self, master, text: str = "", command: callable = None, *args, **kwargs):
         super().__init__(master, text = text, command = command, padx = 4, pady = 3, background = button_bg, 
                          foreground = fg, border = 0, relief = "solid", activebackground = button_press, 
                          activeforeground = fg, highlightthickness = 1, highlightbackground = button_bd,
                          highlightcolor = button_bd, *args, **kwargs)
-        
+
         if self["width"] == 0:
             if len(self["text"]) >= 10: self.configure(width = len(self["text"]))
             else: self.configure(width = 10)
 
-        if self["default"] == "active": self.configure(highlightbackground = button_bd_active, highlightcolor = button_bd_active)
-        else: self.configure(default = "active")
+        if self["default"] == "active": 
+            self.configure(highlightbackground = button_bd_active, highlightcolor = button_bd_active)
+            self.is_active = True
+        else: 
+            self.configure(default = "active")
+            self.is_active = False
 
         self.bind("<Enter>", lambda event: self.configure(background = button_hover))
         self.bind("<Leave>", lambda event: self.configure(background = button_bg))
+
+    def update_colors(self):
+        self.configure(background = button_bg, foreground = fg, activebackground = button_press, 
+                       activeforeground = fg, highlightbackground = button_bd_active if self.is_active else button_bd, 
+                       highlightcolor = button_bd_active if self.is_active else button_bd)
 
 ttk.Button = Button
 
@@ -165,6 +185,7 @@ class App(tk.Tk):
 class Toplevel(tk.Toplevel):
     def set_titlebar_theme(self):
         self.update()
+        self.configure(background = bg)
 
         pywinstyles.apply_style(self, "light" if light_theme else "dark")
         pywinstyles.change_header_color(self, bg)
@@ -184,7 +205,6 @@ class Toplevel(tk.Toplevel):
         self.grab_set()
         self.focus_set()
         self.bind("<Escape>", lambda event: self.destroy())
-        self.configure(background = bg)
         self.set_titlebar_theme()
 
     def resizable(self, width: bool = None, height: bool = None):
@@ -192,3 +212,22 @@ class Toplevel(tk.Toplevel):
         self.set_titlebar_theme()
 
         return value
+    
+def sync_colors(window):
+    update_colors()
+
+    if isinstance(window, App): window.set_theme()
+    elif isinstance(window, Toplevel): window.set_titlebar_theme()
+
+    for widget in window.winfo_children():
+        if isinstance(widget, (CommandLink, Toolbutton, Button)):
+            widget.update_colors()
+        elif isinstance(widget, tk.Entry):
+            widget.configure(background = entry_bg, foreground = fg, highlightcolor = entry_bg, highlightbackground = entry_bg, insertbackground = fg, selectbackground = entry_select)
+            widget.master.configure(highlightbackground = entry_bd, highlightcolor = entry_focus)
+        elif isinstance(widget, tk.Canvas):
+            widget.configure(background = bg)
+        elif isinstance(widget, (Toplevel, ttk.Frame, tk.Frame)):
+            sync_colors(widget)
+
+def sync_colors_with_system(window): threading.Thread(target = lambda: winaccent.on_appearance_changed(lambda: sync_colors(window)), daemon = True).start()
