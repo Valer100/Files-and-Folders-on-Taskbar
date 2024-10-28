@@ -67,4 +67,5 @@ def draw_ui():
     window.update()
 
 draw_ui()
+custom_ui.sync_colors_with_system(window)
 window.mainloop()
