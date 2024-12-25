@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="assets/banner.png">
+    <img width="700" src="assets/banner.png">
 </div>
 
 # Files & Folders on Taskbar
