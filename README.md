@@ -4,7 +4,7 @@
 
 # Files & Folders on Taskbar
 [![Release](https://img.shields.io/github/v/release/Valer100/Files-and-Folders-on-Taskbar?label=stable)](https://github.com/Valer100/Files-and-Folders-on-Taskbar/releases/latest)
-[![Release (unstable)](https://img.shields.io/github/v/release/Valer100/Files-and-Folders-on-Taskbar?include_prereleases&label=prerelease)](https://github.com/Valer100/Files-and-Folders-on-Taskbar/releases)
+[![Pre-release](https://img.shields.io/github/v/release/Valer100/Files-and-Folders-on-Taskbar?include_prereleases&label=pre-release)](https://github.com/Valer100/Files-and-Folders-on-Taskbar/releases)
 [![Windows](https://img.shields.io/badge/windows-10+-blue)]()
 [![Architecture](https://img.shields.io/badge/architecture-x64-blue)]()
 [![Downloads](https://img.shields.io/github/downloads/Valer100/Files-and-Folders-on-Taskbar/total)](https://github.com/Valer100/Files-and-Folders-on-Taskbar/releases)
