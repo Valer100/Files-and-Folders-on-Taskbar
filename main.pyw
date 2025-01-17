@@ -1,4 +1,4 @@
-import tkinter as tk, subprocess, shutil, util, separator_wizard, customize_shortcut, about, change_language, change_theme, strings, custom_ui
+import tkinter as tk, subprocess, shutil, util, separator_wizard, customize_shortcut, about, change_language, change_theme, strings, custom_ui, tktooltip
 from tkinter import ttk, filedialog
 
 window = custom_ui.App()
@@ -55,14 +55,26 @@ def draw_ui():
 
     ttk.Label(window, text = strings.lang.pin_to_taskbar_a_shortcut_to).pack(anchor = "w", pady = (4, 8))
 
-    custom_ui.CommandLink(window, text = strings.lang.a_file, command = lambda: browse("file")).pack(fill = "x", expand = True)
-    custom_ui.CommandLink(window, text = strings.lang.a_folder, command = lambda: browse("folder")).pack(fill = "x", expand = True)
-    custom_ui.CommandLink(window, text = strings.lang.a_separator, command = separator_wizard.show).pack(fill = "x", expand = True)
+    custom_ui.CommandLink(window, title = strings.lang.a_file, description = strings.lang.file_desc, command = lambda: browse("file")).pack(fill = "x", expand = True)
+    custom_ui.CommandLink(window, title = strings.lang.a_folder, description = strings.lang.folder_desc, command = lambda: browse("folder")).pack(fill = "x", expand = True)
+    custom_ui.CommandLink(window, title = strings.lang.a_separator, description = strings.lang.separator_desc, command = separator_wizard.show).pack(fill = "x", expand = True)
 
-    ttk.Label(window, text = strings.lang.settings, font = ("Segoe UI Semibold", 14)).pack(anchor = "w", pady = (16, 4))
-    custom_ui.Toolbutton(window, text = strings.lang.change_language, command = change_app_language, link = True).pack(anchor = "w")
-    custom_ui.Toolbutton(window, text = strings.lang.change_theme, command = change_app_theme, link = True).pack(anchor = "w")
-    custom_ui.Toolbutton(window, text = strings.lang.about_this_app, command = about.show, link = True).pack(anchor = "w")
+    settings = ttk.Frame(window, height = 26)
+    settings.pack(anchor = "w", pady = (20, 2), fill = "x")
+    settings.pack_propagate(False)
+    
+    language = custom_ui.Toolbutton(settings, text = "\ue774", link = True, icononly = True, anchor = "n", command = change_app_language, font = ("Segoe UI", 12))
+    language.pack(anchor = "nw", side = "left")
+
+    theme = custom_ui.Toolbutton(settings, text = "\ue771", link = True, icononly = True, anchor = "n", command = change_app_theme, font = ("Segoe UI", 12))
+    theme.pack(anchor = "nw", side = "left", padx = (4, 0))
+
+    about_app = custom_ui.Toolbutton(settings, text = "\ue946", link = True, icononly = True, anchor = "n", command = about.show, font = ("Segoe UI", 13))
+    about_app.pack(anchor = "nw", side = "left", padx = (4, 0))
+    
+    tktooltip.ToolTip(language, strings.lang.change_language, follow = True, delay = 1, bg = custom_ui.tooltip_bg, fg = custom_ui.tooltip_fg, parent_kwargs = {"bg":custom_ui.tooltip_bd, "padx": 1, "pady": 1})
+    tktooltip.ToolTip(theme, strings.lang.change_theme, follow = True, delay = 1, bg = custom_ui.tooltip_bg, fg = custom_ui.tooltip_fg, parent_kwargs = {"bg":custom_ui.tooltip_bd, "padx": 1, "pady": 1})
+    tktooltip.ToolTip(about_app, strings.lang.about_this_app, follow = True, delay = 1, bg = custom_ui.tooltip_bg, fg = custom_ui.tooltip_fg, parent_kwargs = {"bg":custom_ui.tooltip_bd, "padx": 1, "pady": 1})
 
     window.update()
 

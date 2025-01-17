@@ -4,7 +4,7 @@ from tkinter import ttk
 entry_select = winaccent.accent_normal
 
 def update_colors():
-    global light_theme, bg, bg_hover, bg_press, fg, entry_focus, entry_bd, entry_bg, button_bg, button_hover, button_press, button_bd, button_bd_active, tooltip_bg, tooltip_bd, tooltip_fg, accent, accent_link
+    global light_theme, bg, bg_hover, bg_press, fg, entry_focus, entry_bd, entry_bg, button_bg, button_hover, button_press, button_bd, button_bd_active, tooltip_bg, tooltip_bd, tooltip_fg, accent, accent_link, fg_desc
     light_theme = winaccent.apps_use_light_theme if util.theme == "default" else True if util.theme == "light" else False
 
     if light_theme:
@@ -12,6 +12,7 @@ def update_colors():
         bg_hover = "#e0e0e0"
         bg_press = "#cecece"
         fg = "#000000"
+        fg_desc = "#2c2c2c"
         entry_focus = winaccent.accent_dark
         entry_bd = "#8d8d8d"
         entry_bg = "#ffffff"
@@ -30,6 +31,7 @@ def update_colors():
         bg_hover = "#333333"
         bg_press = "#292929"
         fg = "#ffffff"
+        fg_desc = "#dadada"
         entry_focus = "#ffffff"
         entry_bd = "#6e6e6e"
         entry_bg = "#404040"
@@ -47,20 +49,26 @@ def update_colors():
 update_colors()
 
 class CommandLink(tk.Frame):
-    def __init__(self, master, text: str = "", command: callable = None, *args, **kwargs):
+    def __init__(self, master, title: str = "", description: str = "", command: callable = None, *args, **kwargs):
         super().__init__(master, padx = 8, pady = 8, background = bg, *args, **kwargs)
 
         ver = sys.getwindowsversion()
 
         if ver.major == 10 and ver.build >= 22000:
-            self.arrow = ttk.Label(self, text = "\ue651  ", font = ("Segoe Fluent Icons", 11), padding = (0, 4, 0, 0), foreground = accent_link)
+            self.arrow = ttk.Label(self, text = "\ue651  ", font = ("Segoe Fluent Icons", 13), padding = (0, 4, 0, 0), foreground = accent_link)
         else:
-            self.arrow = ttk.Label(self, text = "\ue0ad  ", font = ("Segoe MDL2 Assets", 11), padding = (0, 4, 0, 0), foreground = accent_link)
+            self.arrow = ttk.Label(self, text = "\ue0ad  ", font = ("Segoe MDL2 Assets", 13), padding = (0, 4, 0, 0), foreground = accent_link)
         
         self.arrow.pack(side = "left", anchor = "w")
 
-        self.text = ttk.Label(self, text = text, font = ("Segoe UI Semibold", 11), foreground = accent_link)
-        self.text.pack(side = "left", anchor = "w")
+        self.text = tk.Frame(self, background = bg)
+        self.text.pack(fill = "x")
+
+        self.title_w = ttk.Label(self.text, text = title, font = ("Segoe UI Semibold", 13), foreground = accent_link)
+        self.title_w.pack(anchor = "w", fill = "x")
+
+        self.description_w = ttk.Label(self.text, text = description, foreground = fg_desc)
+        self.description_w.pack(anchor = "w", fill = "x")
 
         is_touched = False
 
@@ -70,7 +78,9 @@ class CommandLink(tk.Frame):
 
             self.configure(background = bg_hover)
             self.arrow.configure(background = bg_hover, foreground = accent_link)
-            self.text.configure(background = bg_hover, foreground = accent_link)
+            self.title_w.configure(background = bg_hover, foreground = accent_link)
+            self.description_w.configure(background = bg_hover)
+            self.text.configure(background = bg_hover)
 
         def on_leave(event):
             global is_touched
@@ -78,7 +88,9 @@ class CommandLink(tk.Frame):
 
             self.configure(background = bg)
             self.arrow.configure(background = bg, foreground = accent_link)
-            self.text.configure(background = bg, foreground = accent_link)
+            self.title_w.configure(background = bg, foreground = accent_link)
+            self.description_w.configure(background = bg)
+            self.text.configure(background = bg)
 
         def on_click(event):
             global is_touched
@@ -86,14 +98,18 @@ class CommandLink(tk.Frame):
 
             self.configure(background = bg_press)
             self.arrow.configure(background = bg_press, foreground = accent)
-            self.text.configure(background = bg_press, foreground = accent)
+            self.title_w.configure(background = bg_press, foreground = accent)
+            self.description_w.configure(background = bg_press)
+            self.text.configure(background = bg_press)
 
         def on_click_release(event):
             global is_touched
 
             self.configure(background = bg_hover)
             self.arrow.configure(background = bg_hover, foreground = accent_link)
-            self.text.configure(background = bg_hover, foreground = accent_link)
+            self.title_w.configure(background = bg_hover, foreground = accent_link)
+            self.description_w.configure(background = bg_hover)
+            self.text.configure(background = bg_hover)
 
             if not command is None and is_touched: command(); is_touched = False
 
@@ -107,18 +123,26 @@ class CommandLink(tk.Frame):
         self.arrow.bind("<Button-1>", on_click)
         self.arrow.bind("<ButtonRelease-1>", on_click_release)
 
-        self.text.bind("<Enter>", on_enter)
-        self.text.bind("<Leave>", on_leave)
-        self.text.bind("<Button-1>", on_click)
-        self.text.bind("<ButtonRelease-1>", on_click_release)
+        self.title_w.bind("<Enter>", on_enter)
+        self.title_w.bind("<Leave>", on_leave)
+        self.title_w.bind("<Button-1>", on_click)
+        self.title_w.bind("<ButtonRelease-1>", on_click_release)
+
+        self.description_w.bind("<Enter>", on_enter)
+        self.description_w.bind("<Leave>", on_leave)
+        self.description_w.bind("<Button-1>", on_click)
+        self.description_w.bind("<ButtonRelease-1>", on_click_release)
 
     def update_colors(self):
         self["background"] = bg
         self.arrow["background"] = bg
+        self.title_w["background"] = bg
         self.text["background"] = bg
+        self.description_w["background"] = bg
 
         self.arrow["foreground"] = accent_link
-        self.text["foreground"] = accent_link
+        self.title_w["foreground"] = accent_link
+        self.description_w["foreground"] = fg_desc
 
 class Toolbutton(tk.Button):
     def __init__(self, master, text: str = "", command: callable = None, link: bool = False, icononly: bool = False, *args, **kwargs):
