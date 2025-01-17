@@ -3,3 +3,4 @@ Pillow
 pywinstyles
 winaccent
 hPyT
+tkinter-tooltip
