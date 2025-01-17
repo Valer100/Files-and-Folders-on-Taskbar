@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Files & Folders on Taskbar"
-#define MyAppVersion "2.0.0 beta 1"
+#define MyAppVersion "2.0.0 beta 2"
 #define MyAppPublisher "Valer"
 #define MyAppURL "https://github.com/Valer100/Files-and-Folders-on-Taskbar"
 #define MyAppExeName "fnf_on_taskbar.exe"

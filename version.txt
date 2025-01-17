@@ -16,11 +16,11 @@ VSVersionInfo(
         u'040904B0',
         [StringStruct(u'CompanyName', u'Valer'),
         StringStruct(u'FileDescription', u'Files & Folders on Taskbar'),
-        StringStruct(u'FileVersion', u'2.0.0 beta 1'),
+        StringStruct(u'FileVersion', u'2.0.0 beta 2'),
         StringStruct(u'InternalName', u'fnf_on_taskbar.exe'),
         StringStruct(u'OriginalFilename', u'fnf_on_taskbar.exe'),
         StringStruct(u'ProductName', u'Files & Folders on Taskbar'),
-        StringStruct(u'ProductVersion', u'2.0.0 beta 1')])
+        StringStruct(u'ProductVersion', u'2.0.0 beta 2')])
       ]), 
     VarFileInfo([VarStruct(u'Translation', [1033, 1200])])
   ]
