@@ -1,6 +1,8 @@
 import random, win32com.client, win32ui, win32gui, subprocess, ctypes, os, getpass, strings
 from PIL import Image
 
+os.chdir(os.path.dirname(__file__))
+
 if os.path.exists("icon.ico"): internal = ""
 else: internal = "_internal\\"
 
