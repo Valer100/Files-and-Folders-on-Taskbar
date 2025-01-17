@@ -4,7 +4,7 @@ from tkinter import ttk
 entry_select = winaccent.accent_normal
 
 def update_colors():
-    global light_theme, bg, bg_hover, bg_press, fg, entry_focus, entry_bd, entry_bg, button_bg, button_hover, button_press, button_bd, button_bd_active, accent, accent_link
+    global light_theme, bg, bg_hover, bg_press, fg, entry_focus, entry_bd, entry_bg, button_bg, button_hover, button_press, button_bd, button_bd_active, tooltip_bg, tooltip_bd, tooltip_fg, accent, accent_link
     light_theme = winaccent.apps_use_light_theme if util.theme == "default" else True if util.theme == "light" else False
 
     if light_theme:
@@ -20,12 +20,15 @@ def update_colors():
         button_press = "#dbdbdb"
         button_bd = "#d0d0d0"
         button_bd_active = winaccent.accent_dark
+        tooltip_bg = "#ffffff"
+        tooltip_bd = "#8f8f8f"
+        tooltip_fg = "#505050"
         accent = winaccent.accent_dark
         accent_link = winaccent.accent_dark_2
     else:
         bg = "#202020"
-        bg_hover = "#292929"
-        bg_press = "#333333"
+        bg_hover = "#333333"
+        bg_press = "#292929"
         fg = "#ffffff"
         entry_focus = "#ffffff"
         entry_bd = "#6e6e6e"
@@ -35,6 +38,9 @@ def update_colors():
         button_press = "#676767"
         button_bd = "#9b9b9b"
         button_bd_active = "#ffffff"
+        tooltip_bg = "#2b2b2b"
+        tooltip_bd = "#747474"
+        tooltip_fg = "#ffffff"
         accent = winaccent.accent_light
         accent_link = winaccent.accent_light_3
 
@@ -63,31 +69,31 @@ class CommandLink(tk.Frame):
             is_touched = True
 
             self.configure(background = bg_hover)
-            self.arrow.configure(background = bg_hover)
-            self.text.configure(background = bg_hover)
+            self.arrow.configure(background = bg_hover, foreground = accent_link)
+            self.text.configure(background = bg_hover, foreground = accent_link)
 
         def on_leave(event):
             global is_touched
             is_touched = False
 
             self.configure(background = bg)
-            self.arrow.configure(background = bg)
-            self.text.configure(background = bg)
+            self.arrow.configure(background = bg, foreground = accent_link)
+            self.text.configure(background = bg, foreground = accent_link)
 
         def on_click(event):
             global is_touched
             is_touched = True
 
             self.configure(background = bg_press)
-            self.arrow.configure(background = bg_press)
-            self.text.configure(background = bg_press)
+            self.arrow.configure(background = bg_press, foreground = accent)
+            self.text.configure(background = bg_press, foreground = accent)
 
         def on_click_release(event):
             global is_touched
 
             self.configure(background = bg_hover)
-            self.arrow.configure(background = bg_hover)
-            self.text.configure(background = bg_hover)
+            self.arrow.configure(background = bg_hover, foreground = accent_link)
+            self.text.configure(background = bg_hover, foreground = accent_link)
 
             if not command is None and is_touched: command(); is_touched = False
 
@@ -115,16 +121,21 @@ class CommandLink(tk.Frame):
         self.text["foreground"] = accent_link
 
 class Toolbutton(tk.Button):
-    def __init__(self, master, text: str = "", command: callable = None, *args, **kwargs):
-        super().__init__(master, text = text, command = command, padx = 8, pady = 2, background = bg, foreground = accent_link,
-                         border = 0, relief = "solid", activebackground = bg_press, activeforeground = accent_link, *args, 
-                         **kwargs)
-        
+    def __init__(self, master, text: str = "", command: callable = None, link: bool = False, icononly: bool = False, *args, **kwargs):
+        super().__init__(master, text = text, command = command, padx = 2 if icononly else 4, pady = 2, background = bg, 
+                         foreground = accent_link if link else fg, border = 0, relief = "solid", 
+                         activebackground = bg_press, activeforeground = accent if link else fg,
+                         cursor = "hand2" if link and not icononly else "", *args, **kwargs)
+
+        self.link = link
+
+        if icononly: self.configure(width = 2)
+
         self.bind("<Enter>", lambda event: self.configure(background = bg_hover))
         self.bind("<Leave>", lambda event: self.configure(background = bg))
 
     def update_colors(self):
-        self.configure(background = bg, foreground = accent_link, activebackground = bg_press, activeforeground = accent_link)
+        self.configure(background = bg, foreground = accent_link if self.link else fg, activebackground = bg_press, activeforeground = accent if self.link else fg)
 
 class Button(tk.Button):
     def __init__(self, master, text: str = "", command: callable = None, *args, **kwargs):
@@ -151,6 +162,30 @@ class Button(tk.Button):
         self.configure(background = button_bg, foreground = fg, activebackground = button_press, 
                        activeforeground = fg, highlightbackground = button_bd_active if self.is_active else button_bd, 
                        highlightcolor = button_bd_active if self.is_active else button_bd)
+
+class OptionMenu(tk.OptionMenu):
+    def __init__(self, master, variable, value, *values):
+        super().__init__(master, variable, value, *values)
+
+        if light_theme: self.arrow = tk.PhotoImage(file = f"{util.internal}icons/dropdown_light.png")
+        else: self.arrow = tk.PhotoImage(file = f"{util.internal}icons/dropdown_dark.png")
+
+        self.configure(background = button_bg, foreground = fg, activebackground = button_hover, 
+                       activeforeground = fg, highlightbackground = button_bd, highlightcolor = button_bd, 
+                       image = self.arrow, compound = "right", indicatoron = False, border = 0, relief = "solid", 
+                       highlightthickness = 1, pady = 4, padx = 7)
+        
+        self["menu"].configure(activebackground = winaccent.accent_normal)
+
+    def update_colors(self):
+        if light_theme: self.arrow = tk.PhotoImage(file = f"{util.internal}icons/dropdown_light.png")
+        else: self.arrow = tk.PhotoImage(file = f"{util.internal}icons/dropdown_dark.png")
+
+        self.configure(background = button_bg, foreground = fg, activebackground = button_hover, 
+                       activeforeground = fg, highlightbackground = button_bd, highlightcolor = button_bd, 
+                       image = self.arrow)
+
+        self["menu"].configure(activebackground = winaccent.accent_normal)
 
 ttk.Button = Button
 
@@ -220,7 +255,7 @@ def sync_colors(window):
     elif isinstance(window, Toplevel): window.set_titlebar_theme()
 
     for widget in window.winfo_children():
-        if isinstance(widget, (CommandLink, Toolbutton, Button)):
+        if isinstance(widget, (CommandLink, Toolbutton, Button, OptionMenu)):
             widget.update_colors()
         elif isinstance(widget, tk.Entry):
             widget.configure(background = entry_bg, foreground = fg, highlightcolor = entry_bg, highlightbackground = entry_bg, insertbackground = fg, selectbackground = entry_select)
