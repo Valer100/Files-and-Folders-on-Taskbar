@@ -11,7 +11,6 @@ def show():
     window = custom_ui.Toplevel()
     window.title(strings.lang.change_language)
     window.resizable(False, False)
-    window.iconbitmap(util.internal + "icon.ico")
     window.configure(padx = 16, pady = 0)
 
     language = tk.StringVar(value = util.language)

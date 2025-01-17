@@ -11,7 +11,6 @@ def show():
     window = custom_ui.Toplevel()
     window.title(strings.lang.change_theme)
     window.resizable(False, False)
-    window.iconbitmap(util.internal + "icon.ico")
     window.configure(padx = 16, pady = 0)
 
     theme = tk.StringVar(value = util.theme)

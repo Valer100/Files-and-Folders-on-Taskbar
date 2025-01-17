@@ -13,7 +13,6 @@ def show(shortcut_type: str, path: str):
     window = custom_ui.Toplevel()
     window.title(strings.lang.customize_shortcut)
     window.resizable(False, False)
-    window.iconbitmap(util.internal + "icon.ico")
     window.configure(padx = 16)
 
     use_folder_icon = tk.BooleanVar(value = True)
