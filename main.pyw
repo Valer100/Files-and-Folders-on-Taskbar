@@ -60,9 +60,9 @@ def draw_ui():
     custom_ui.CommandLink(window, text = strings.lang.a_separator, command = separator_wizard.show).pack(fill = "x", expand = True)
 
     ttk.Label(window, text = strings.lang.settings, font = ("Segoe UI Semibold", 14)).pack(anchor = "w", pady = (16, 4))
-    custom_ui.Toolbutton(window, text = strings.lang.change_language, command = change_app_language).pack(anchor = "w")
-    custom_ui.Toolbutton(window, text = strings.lang.change_theme, command = change_app_theme).pack(anchor = "w")
-    custom_ui.Toolbutton(window, text = strings.lang.see_open_source_licenses, command = open_source_licenses.show).pack(anchor = "w")
+    custom_ui.Toolbutton(window, text = strings.lang.change_language, command = change_app_language, link = True).pack(anchor = "w")
+    custom_ui.Toolbutton(window, text = strings.lang.change_theme, command = change_app_theme, link = True).pack(anchor = "w")
+    custom_ui.Toolbutton(window, text = strings.lang.see_open_source_licenses, command = open_source_licenses.show, link = True).pack(anchor = "w")
 
     window.update()
 
