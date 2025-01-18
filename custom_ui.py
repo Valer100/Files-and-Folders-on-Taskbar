@@ -48,6 +48,7 @@ def update_colors():
 
 update_colors()
 
+
 class CommandLink(tk.Frame):
     def __init__(self, master, title: str = "", description: str = "", command: callable = None, *args, **kwargs):
         super().__init__(master, padx = 8, pady = 8, background = bg, *args, **kwargs)
@@ -144,6 +145,7 @@ class CommandLink(tk.Frame):
         self.title_w["foreground"] = accent_link
         self.description_w["foreground"] = fg_desc
 
+
 class Toolbutton(tk.Button):
     def __init__(self, master, text: str = "", command: callable = None, link: bool = False, icononly: bool = False, *args, **kwargs):
         super().__init__(master, text = text, command = command, padx = 2 if icononly else 4, pady = 2, background = bg, 
@@ -160,6 +162,7 @@ class Toolbutton(tk.Button):
 
     def update_colors(self):
         self.configure(background = bg, foreground = accent_link if self.link else fg, activebackground = bg_press, activeforeground = accent if self.link else fg)
+
 
 class Button(tk.Button):
     def __init__(self, master, text: str = "", command: callable = None, *args, **kwargs):
@@ -187,6 +190,9 @@ class Button(tk.Button):
                        activeforeground = fg, highlightbackground = button_bd_active if self.is_active else button_bd, 
                        highlightcolor = button_bd_active if self.is_active else button_bd)
 
+ttk.Button = Button
+
+
 class OptionMenu(tk.OptionMenu):
     def __init__(self, master, variable, value, *values):
         super().__init__(master, variable, value, *values)
@@ -211,19 +217,11 @@ class OptionMenu(tk.OptionMenu):
 
         self["menu"].configure(activebackground = winaccent.accent_normal)
 
-ttk.Button = Button
 
 class App(tk.Tk):
     def set_theme(self):
         pywinstyles.apply_style(self, "light" if light_theme else "dark")
         pywinstyles.change_header_color(self, bg)
-
-        version = sys.getwindowsversion()
-        
-        if version.major == 10 and version.build < 22000:
-            # A hacky way to update the title bar's color on Windows 10 (it doesn't update instantly like on Windows 11)
-            self.wm_attributes("-alpha", 0.99)
-            self.wm_attributes("-alpha", 1)
 
         style = ttk.Style()
         style.configure(".", background = bg, foreground = fg)
@@ -231,7 +229,9 @@ class App(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.withdraw()
 
+        self.iconbitmap(default = util.internal + "icon.ico")
         self.update()
         self.set_theme()
 
@@ -240,6 +240,11 @@ class App(tk.Tk):
         self.set_theme()
 
         return value
+    
+    def mainloop(self, n = 0):
+        self.deiconify()
+        super().mainloop(n)
+
 
 class Toplevel(tk.Toplevel):
     def set_titlebar_theme(self):
@@ -249,17 +254,11 @@ class Toplevel(tk.Toplevel):
         pywinstyles.apply_style(self, "light" if light_theme else "dark")
         pywinstyles.change_header_color(self, bg)
 
-        version = sys.getwindowsversion()
-        
-        if version.major == 10 and version.build < 22000:
-            # A hacky way to update the title bar's color on Windows 10 (it doesn't update instantly like on Windows 11)
-            self.wm_attributes("-alpha", 0.99)
-            self.wm_attributes("-alpha", 1)
-
         hPyT.maximize_minimize_button.hide(self)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.withdraw()
 
         self.grab_set()
         self.focus_set()
@@ -269,8 +268,10 @@ class Toplevel(tk.Toplevel):
     def resizable(self, width: bool = None, height: bool = None):
         value = super().resizable(width, height)
         self.set_titlebar_theme()
+        self.deiconify()
 
         return value
+    
     
 def sync_colors(window):
     update_colors()
