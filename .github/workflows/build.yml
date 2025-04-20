@@ -1,0 +1,160 @@
+name: Build binaries
+
+on: [push, pull_request]
+
+jobs:
+  build_x86:
+    if: ${{ !contains(github.event.head_commit.message, 'skip build:') }}
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Python 3.11.9
+        run: |
+          Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.11.9/python-3.11.9.exe" -OutFile "python_installer.exe"
+          Start-Process -FilePath "python_installer.exe" -ArgumentList "/quiet", "InstallAllUsers=1", "PrependPath=1", "Include_tcltk=1" -NoNewWindow -Wait
+
+      - name: Install Inno Setup Compiler
+        run: |
+            Invoke-WebRequest -Uri "https://jrsoftware.org/download.php/is.exe" -OutFile "is_installer.exe"
+            Start-Process -FilePath "is_installer.exe" -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART" -NoNewWindow -Wait
+  
+      - name: Replace placeholders with information
+        run: |
+          $COMMIT_HASH = "${{ github.sha }}".Substring(0,7)
+          (Get-Content strings/_info.py) -replace "%commit_hash", $COMMIT_HASH | Set-Content strings/_info.py
+          (Get-Content strings/_info.py) -replace "channel = ""dev""", "channel = ""canary""" | Set-Content strings/_info.py
+
+      - name: Build application
+        run: |
+            $env:PATH = "C:\hostedtoolcache\windows\python\3.11.9\x86\Scripts;C:\hostedtoolcache\windows\python\3.11.9\x86;$env:PATH"
+            .\build_app.bat
+            
+      - name: Build installer
+        run: |
+            & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" build_installer_x86.iss
+
+      - name: Create `preferences` folder (for portable build)
+        run: |
+            New-Item -Name "build\fnf_on_taskbar\preferences" -ItemType "directory"
+            New-Item -Name "build\fnf_on_taskbar\preferences\settings.yaml" -ItemType "file"
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: fnf_on_taskbar_portable_x86
+          path: build/fnf_on_taskbar
+          compression-level: 9
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: fnf_on_taskbar_installer_x86
+          path: build/fnf_on_taskbar_installer_x86.exe
+          compression-level: 9
+
+  build_x64:
+    if: ${{ !contains(github.event.head_commit.message, 'skip build:') }}
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Python 3.11.9
+        run: |
+          Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe" -OutFile "python_installer.exe"
+          Start-Process -FilePath "python_installer.exe" -ArgumentList "/quiet", "InstallAllUsers=1", "PrependPath=1", "Include_tcltk=1" -NoNewWindow -Wait
+
+      - name: Install Inno Setup Compiler
+        run: |
+            Invoke-WebRequest -Uri "https://jrsoftware.org/download.php/is.exe" -OutFile "is_installer.exe"
+            Start-Process -FilePath "is_installer.exe" -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART" -NoNewWindow -Wait
+  
+      - name: Replace placeholders with information
+        run: |
+          $COMMIT_HASH = "${{ github.sha }}".Substring(0,7)
+          (Get-Content strings/_info.py) -replace "%commit_hash", $COMMIT_HASH | Set-Content strings/_info.py
+          (Get-Content strings/_info.py) -replace "channel = ""dev""", "channel = ""canary""" | Set-Content strings/_info.py
+
+      - name: Build application
+        run: |
+            $env:PATH = "C:\hostedtoolcache\windows\python\3.11.9\x64\Scripts;C:\hostedtoolcache\windows\python\3.11.9\x64;$env:PATH"
+            .\build_app.bat
+            
+      - name: Build installer
+        run: |
+            & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" build_installer_x64.iss
+
+      - name: Create `preferences` folder (for portable build)
+        run: |
+            New-Item -Name "build\fnf_on_taskbar\preferences" -ItemType "directory"
+            New-Item -Name "build\fnf_on_taskbar\preferences\settings.yaml" -ItemType "file"
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: fnf_on_taskbar_portable_x64
+          path: build/fnf_on_taskbar
+          compression-level: 9
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: fnf_on_taskbar_installer_x64
+          path: build/fnf_on_taskbar_installer_x64.exe
+          compression-level: 9
+
+  build_arm64:
+    if: ${{ !contains(github.event.head_commit.message, 'skip build:') }}
+    runs-on: windows-11-arm
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Python 3.11.9
+        run: |
+          Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.11.9/python-3.11.9-arm64.exe" -OutFile "python_installer.exe"
+          Start-Process -FilePath "python_installer.exe" -ArgumentList "/quiet", "InstallAllUsers=1", "PrependPath=1", "Include_tcltk=1" -NoNewWindow -Wait
+
+      - name: Install Inno Setup Compiler
+        run: |
+            Invoke-WebRequest -Uri "https://jrsoftware.org/download.php/is.exe" -OutFile "is_installer.exe"
+            Start-Process -FilePath "is_installer.exe" -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART" -NoNewWindow -Wait
+  
+      - name: Replace placeholders with information
+        run: |
+          $COMMIT_HASH = "${{ github.sha }}".Substring(0,7)
+          (Get-Content strings/_info.py) -replace "%commit_hash", $COMMIT_HASH | Set-Content strings/_info.py
+          (Get-Content strings/_info.py) -replace "channel = ""dev""", "channel = ""canary""" | Set-Content strings/_info.py
+
+      - name: Build application
+        run: |
+            $env:PATH = "C:\Program Files\Python311-arm64\Scripts;C:\Program Files\Python311-arm64;$env:PATH"
+            .\build_app.bat
+            
+      - name: Build installer
+        run: |
+            & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" build_installer_arm64.iss
+
+      - name: Create `preferences` folder (for portable build)
+        run: |
+            New-Item -Name "build\fnf_on_taskbar\preferences" -ItemType "directory"
+            New-Item -Name "build\fnf_on_taskbar\preferences\settings.yaml" -ItemType "file"
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: fnf_on_taskbar_portable_arm64
+          path: build/fnf_on_taskbar
+          compression-level: 9
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: fnf_on_taskbar_installer_arm64
+          path: build/fnf_on_taskbar_installer_arm64.exe
+          compression-level: 9
