@@ -59,3 +59,14 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
+[Code]
+procedure InitializeWizard();
+begin
+  WizardForm.WelcomeLabel1.Font.Name := 'Segoe UI Bold';
+  WizardForm.WelcomeLabel1.Font.Size := 15;
+  WizardForm.WelcomeLabel2.Top := WizardForm.WelcomeLabel2.Top + 20;
+  
+  WizardForm.FinishedHeadingLabel.Font.Name := 'Segoe UI Bold';
+  WizardForm.FinishedHeadingLabel.Font.Size := 15;
+  WizardForm.FinishedLabel.Top := WizardForm.FinishedLabel.Top + 20;
+end;
