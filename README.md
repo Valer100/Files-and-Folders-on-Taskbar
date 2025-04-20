@@ -63,7 +63,7 @@ Just run `build_app.bat`. It will do everything needed to build the app. After t
 ### Building the installer
 Before building the installer, you must install Inno Setup Compiler on your computer. You can download it [here](https://jrsoftware.org/isdl.php/).
 
-Also, you must build the app first before building the installer. After building the app, make sure a `build` folder appears. If it doesn't and appears a `dist` folder intstead, rename that folder to `build`. After that, right-click `build_installer.iss` and choose `Compile`. After the installer was built, you can find it in the same `build` folder.
+Also, you must build the app first before building the installer. After building the app, make sure a `build` folder appears. If it doesn't and appears a `dist` folder intstead, rename that folder to `build`. After that, right-click `build_installer_x86.iss`, `build_installer_x64.iss` or `build_installer_arm64.iss` (depending on your CPU's architecture) and choose `Compile`. After the installer was built, you can find it in the same `build` folder.
 
 ## 💿 Download
 Click [here](https://github.com/Valer100/Files-and-Folders-on-Taskbar/releases/latest) to download the latest version. You can download either the portable or the installer version.
