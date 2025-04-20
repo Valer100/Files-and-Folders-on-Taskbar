@@ -5,5 +5,5 @@ winaccent
 hPyT
 tkinter-tooltip
 appdirs
-iconextract
+icoextract
 pyyaml
