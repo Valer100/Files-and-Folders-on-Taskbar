@@ -1,3 +1,5 @@
+from . import _info
+
 # Language info
 language = "English"
 language_en = "English"
@@ -44,6 +46,10 @@ cancel = "Cancel"
 shortcut_created_message = "The shortcut has been created.\n\nNow, drag the shortcut from the folder that was opened to your taskbar and then close the File Explorer window.\n\nYou have to do this extra step, because it's not that easy for 3rd party programs to pin a shortcut to the taskbar on Windows 10 and 11."
 about_this_app = "About this app"
 about_title = "About Files & Folders on Taskbar"
-version = "Version %v"
+version = f"Version {_info.version}"
+last_commit = f"(last commit: {_info.last_commit})"
 issues = "Issues"
 latest_version = "Latest version"
+copy_traceback = "Copy traceback"
+license = "License"
+translation_made_by = "Translation made by %a"

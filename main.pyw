@@ -1,16 +1,18 @@
-import tkinter as tk, subprocess, shutil, util, separator_wizard, customize_shortcut, about, change_language, change_theme, strings, custom_ui, tktooltip
+import tkinter as tk, subprocess, shutil, custom_ui, tktooltip, strings
+from dialogs import separator_wizard, customize_shortcut, about, change_language, change_theme
+from utils import preferences
 from tkinter import ttk, filedialog
 
 window = custom_ui.App()
 window.title("Files & Folders on Taskbar")
 window.resizable(False, False)
-window.iconbitmap(bitmap = util.internal + "icon.ico", default = util.internal + "icon.ico")
 window.configure(padx = 14, pady = 8)
 
 shortcut_type = tk.StringVar(value = "file")
 
-subprocess.call(f"rmdir /q /s \"{util.working_folder}\\separators\"", shell = True)
-shutil.copytree(util.internal + "separators", util.working_folder + "\\separators")
+subprocess.call(f"rmdir /q /s \"{preferences.working_folder}\\separators\"", shell = True)
+shutil.copytree(preferences.internal + "separators", preferences.working_folder + "\\separators")
+
 
 def browse(shortcut_type):
     if shortcut_type == "file":
@@ -24,32 +26,52 @@ def browse(shortcut_type):
         if not folder == "": customize_shortcut.show("folder", folder)
         else: return
 
+
 def destroy_everything(widget):
     for child in widget.winfo_children():
         child.destroy()
 
+
 def change_app_language():
-    old_language = util.language
+    def update_strings(widget):
+        for child in widget.winfo_children():
+            if isinstance(child, (custom_ui.App, custom_ui.Toplevel, tk.Frame, ttk.Frame, tktooltip.ToolTip)):
+                update_strings(child)
+            else:
+                for variable in dir(old_language_module):
+                    if isinstance(getattr(old_language_module, variable), str):
+                        try:
+                            if child["text"] == getattr(old_language_module, variable):
+                                child["text"] = getattr(strings.lang, variable)
+                            elif child["text"] in [" " + getattr(old_language_module, variable), "  " + getattr(old_language_module, variable)]:
+                                child["text"] = child["text"].replace(getattr(old_language_module, variable), getattr(strings.lang, variable))
+                        except:
+                            pass
+
+    old_language = preferences.language
+    old_language_module = strings.lang
 
     change_language.show()
     window.wait_window(change_language.window)
 
-    if old_language != util.language: draw_ui()
+    if old_language != preferences.language:             
+        strings.load_language(preferences.language)
+        update_strings(window)
+
 
 def change_app_theme():
-    old_theme = util.theme
+    old_theme = preferences.theme
 
     change_theme.show()
     window.wait_window(change_theme.window)
 
-    if old_theme != util.theme:
-        custom_ui.update_colors()
-        window.set_theme()
-        draw_ui()
+    if old_theme != preferences.theme:
+        custom_ui.sync_colors(window)
+
 
 def draw_ui():
     destroy_everything(window)
-    strings.load_language(open(util.user_preferences + "\\language", "r").read())
+    strings.load_language(preferences.language)
 
     ttk.Label(window, text = "Files & Folders on Taskbar", font = ("Segoe UI Semibold", 17)).pack(anchor = "w")
 
@@ -72,11 +94,12 @@ def draw_ui():
     about_app = custom_ui.Toolbutton(settings, text = "\ue946", link = True, icononly = True, anchor = "n", command = about.show, font = ("Segoe UI", 13))
     about_app.pack(anchor = "nw", side = "left", padx = (4, 0))
     
-    tktooltip.ToolTip(language, strings.lang.change_language, follow = True, delay = 1, bg = custom_ui.tooltip_bg, fg = custom_ui.tooltip_fg, parent_kwargs = {"bg":custom_ui.tooltip_bd, "padx": 1, "pady": 1})
-    tktooltip.ToolTip(theme, strings.lang.change_theme, follow = True, delay = 1, bg = custom_ui.tooltip_bg, fg = custom_ui.tooltip_fg, parent_kwargs = {"bg":custom_ui.tooltip_bd, "padx": 1, "pady": 1})
-    tktooltip.ToolTip(about_app, strings.lang.about_this_app, follow = True, delay = 1, bg = custom_ui.tooltip_bg, fg = custom_ui.tooltip_fg, parent_kwargs = {"bg":custom_ui.tooltip_bd, "padx": 1, "pady": 1})
+    tktooltip.ToolTip(language, strings.lang.change_language, follow = False, delay = 1)
+    tktooltip.ToolTip(theme, strings.lang.change_theme, follow = False, delay = 1)
+    tktooltip.ToolTip(about_app, strings.lang.about_this_app, follow = False, delay = 1)
 
     window.update()
+
 
 draw_ui()
 custom_ui.sync_colors_with_system(window)

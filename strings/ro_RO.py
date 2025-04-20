@@ -1,3 +1,5 @@
+from . import _info
+
 # Language info
 language = "Română"
 language_en = "Romanian"
@@ -44,6 +46,10 @@ cancel = "Anulare"
 shortcut_created_message = "Scurtătura a fost creată.\n\nAcum, trage scurtătura din folderul care s-a deschis pe taskbar-ul tău și apoi închide fereastra File Explorer-ului.\n\nTrebuie să faci acest pas în plus, deoarece nu este foarte ușor pentru programe 3rd party să fixeze o scurtătură pe taskbar pe Windows 10 și 11."
 about_this_app = "Despre această aplicație"
 about_title = "Despre Files & Folders on Taskbar"
-version = "Versiunea %v"
+version = f"Versiunea {_info.version}"
+last_commit = f"(ultimul commit: {_info.last_commit})"
 issues = "Probleme"
 latest_version = "Cea mai recentă versiune"
+copy_traceback = "Copiază traceback-ul"
+license = "Licență"
+translation_made_by = "Traducere făcută de %a"

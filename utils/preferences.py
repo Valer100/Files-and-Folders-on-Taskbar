@@ -1,24 +1,67 @@
 import random, win32com.client, win32ui, win32gui, subprocess, ctypes, os, getpass, strings
+import os, appdirs, ctypes, yaml, sys
 from PIL import Image
 
 os.chdir(os.path.dirname(__file__))
 
-if os.path.exists("icon.ico"): internal = ""
-else: internal = "_internal\\"
+if getattr(sys, "frozen", False): 
+    internal = "_internal\\"
+    os.chdir(os.path.dirname(sys.executable))
+else: 
+    internal = ""
+    os.chdir(os.path.dirname(sys.argv[0]))
 
+if os.path.exists("preferences") and os.path.isdir("preferences"):
+    user_preferences = os.path.abspath("preferences")
+    is_portable = True
+else:
+    user_preferences = appdirs.user_config_dir(appname = "Files & Folder on Taskbar", appauthor = False, roaming = True)
+    is_portable = False
+
+if not os.path.exists(user_preferences): os.mkdir(user_preferences)
 working_folder = "C:\\Users\\Public\\Documents\\Files & Folders on Taskbar\\"
-user_preferences = f"C:\\Users\\{getpass.getuser()}\\AppData\\Roaming\\Files & Folders on Taskbar"
 script_template = "WScript.CreateObject(\"WScript.Shell\").Run \"cmd /c (command)\", 0, True"
 script_template_2 = "WScript.CreateObject(\"WScript.Shell\").Run \"(command)\", 0, True"
 
-if not os.path.exists(user_preferences): os.mkdir(user_preferences)
-if not os.path.exists(user_preferences + "\\language"): open(user_preferences + "\\language", "w").write("default")
-if not os.path.exists(user_preferences + "\\theme"): open(user_preferences + "\\theme", "w").write("default")
+theme, language = "default", "default"
 
-theme = open(user_preferences + "\\theme", "r").read()
-language = open(user_preferences + "\\language", "r").read()
+def save_settings():
+    settings = {
+        "theme": theme,
+        "language": language,
+    }
 
-strings.load_language(language)
+    settings_file = open(user_preferences + "\\settings.yaml", "w", encoding = "utf8")
+    settings_file.write(yaml.safe_dump(data = settings, allow_unicode = True, sort_keys = False))
+    settings_file.close()
+
+def load_settings():
+    global theme, language, additional_prefs
+
+    settings_file = open(user_preferences + "\\settings.yaml", "r", encoding = "utf8")
+    settings_yaml = settings_file.read()
+    settings_file.close()
+    settings = yaml.safe_load(settings_yaml)
+
+    language = settings["language"]
+    theme = settings["theme"]
+
+try:
+    load_settings()
+except:
+    save_settings()
+
+ctypes.windll.shcore.SetProcessDpiAwareness(1)
+
+dpi = ctypes.c_uint()
+monitor_handle = ctypes.windll.user32.MonitorFromPoint(0, 0, 2)
+ctypes.windll.shcore.GetDpiForMonitor(monitor_handle, 0, ctypes.byref(dpi), ctypes.byref(dpi))
+
+scale_factor = dpi.value / 96
+
+def get_scaled_value(value: int) -> int:
+    return int(value * scale_factor + 0.5)
+
 
 def pick_icon() -> str:
     delete_remnants()
