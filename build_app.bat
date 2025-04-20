@@ -37,5 +37,3 @@ ren "dist" "build"
 
 echo.
 echo Files ^& Folders on taskbar has been successfully built.
-echo Press any key to exit...
-timeout /t -1 > NUL
