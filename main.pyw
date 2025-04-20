@@ -1,7 +1,7 @@
 import tkinter as tk, subprocess, shutil, custom_ui, tktooltip, strings
+from tkinter import ttk, filedialog
 from dialogs import separator_wizard, customize_shortcut, about, change_language, change_theme
 from utils import preferences
-from tkinter import ttk, filedialog
 
 window = custom_ui.App()
 window.title("Files & Folders on Taskbar")
@@ -81,18 +81,18 @@ def draw_ui():
     custom_ui.CommandLink(window, title = strings.lang.a_folder, description = strings.lang.folder_desc, command = lambda: browse("folder")).pack(fill = "x", expand = True)
     custom_ui.CommandLink(window, title = strings.lang.a_separator, description = strings.lang.separator_desc, command = separator_wizard.show).pack(fill = "x", expand = True)
 
-    settings = ttk.Frame(window, height = 26)
-    settings.pack(anchor = "w", pady = (20, 2), fill = "x")
+    settings = ttk.Frame(window, height = preferences.get_scaled_value(26))
+    settings.pack(anchor = "w", pady = (preferences.get_scaled_value(20), preferences.get_scaled_value(2)), fill = "x")
     settings.pack_propagate(False)
     
     language = custom_ui.Toolbutton(settings, text = "\ue774", link = True, icononly = True, anchor = "n", command = change_app_language, font = ("Segoe UI", 12))
     language.pack(anchor = "nw", side = "left")
 
     theme = custom_ui.Toolbutton(settings, text = "\ue771", link = True, icononly = True, anchor = "n", command = change_app_theme, font = ("Segoe UI", 12))
-    theme.pack(anchor = "nw", side = "left", padx = (4, 0))
+    theme.pack(anchor = "nw", side = "left", padx = (preferences.get_scaled_value(4), 0))
 
     about_app = custom_ui.Toolbutton(settings, text = "\ue946", link = True, icononly = True, anchor = "n", command = about.show, font = ("Segoe UI", 13))
-    about_app.pack(anchor = "nw", side = "left", padx = (4, 0))
+    about_app.pack(anchor = "nw", side = "left", padx = (preferences.get_scaled_value(4), 0))
     
     tktooltip.ToolTip(language, strings.lang.change_language, follow = False, delay = 1)
     tktooltip.ToolTip(theme, strings.lang.change_theme, follow = False, delay = 1)
