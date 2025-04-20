@@ -1,4 +1,5 @@
-import tkinter as tk, utils.preferences as preferences, strings, custom_ui
+import tkinter as tk, strings, custom_ui
+from utils import preferences, shortcut
 from tkinter import ttk
 
 def show():
@@ -19,9 +20,9 @@ def show():
     separator_horizontal = tk.PhotoImage(file = preferences.internal + "separators/preview/separator_horizontal.png")
     transparent = tk.PhotoImage(file = preferences.internal + "separators/preview/transparent.png")
 
-    def create_vertical_separator_shortcut(): window.destroy(); preferences.create_separator_shortcut("vertical")
-    def create_horizontal_separator_shortcut(): window.destroy(); preferences.create_separator_shortcut("horizontal")
-    def create_transparent_separator_shortcut(): window.destroy(); preferences.create_separator_shortcut("transparent")
+    def create_vertical_separator_shortcut(): window.destroy(); shortcut.create_separator_shortcut("vertical")
+    def create_horizontal_separator_shortcut(): window.destroy(); shortcut.create_separator_shortcut("horizontal")
+    def create_transparent_separator_shortcut(): window.destroy(); shortcut.create_separator_shortcut("transparent")
 
     vertical = custom_ui.Button(separator_types, width = 100, image = separator_vertical, compound = "top",
                           text = strings.lang.vertical_line, command = create_vertical_separator_shortcut)

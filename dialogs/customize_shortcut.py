@@ -1,6 +1,6 @@
-import tkinter as tk, utils.preferences as preferences, strings, custom_ui
+import tkinter as tk, strings, custom_ui
 from tkinter import ttk, messagebox
-from PIL import Image
+from utils import shortcut, preferences, icon
 
 def show(shortcut_type: str, path: str):
     global shortcut_icon, shortcut_icon_index
@@ -17,24 +17,17 @@ def show(shortcut_type: str, path: str):
     shortcut_info = ttk.Frame(window)
     shortcut_info.pack(fill = "x", expand = True, pady = (16, 0))
 
-    icon = tk.Canvas(shortcut_info, width = 32, height = 32, bd = 0, highlightthickness = 0, background = custom_ui.colors.bg)
-    icon.pack(side = "left")
+    icon_canvas = tk.Canvas(shortcut_info, width = 32, height = 32, bd = 0, highlightthickness = 0, background = custom_ui.colors.bg)
+    icon_canvas.pack(side = "left")
 
     def update_icon(icon_path: str, icon_index: int = 0):
-        global shortcut_icon, shortcut_icon_index, img2
+        global shortcut_icon, shortcut_icon_index, img
 
-        try:
-            if icon_path.endswith(".ico") or icon_index == None: img = Image.open(icon_path)
-            else: img = preferences.extract_icon(icon_path, icon_index)
-        except: img = preferences.extract_icon(icon_path, icon_index)
+        icon.extract_icon(icon_path, icon_index)
+        img = tk.PhotoImage(file = preferences.temp + "\\preview.png")
 
-        img.thumbnail((32, 32), Image.Resampling.LANCZOS)
-        img.save(preferences.working_folder + "\\icon.png")
-
-        img2 = tk.PhotoImage(file = preferences.working_folder + "\\icon.png")
-
-        icon.delete("all")
-        icon.create_image(0, 0, image = img2, anchor = "nw")
+        icon_canvas.delete("all")
+        icon_canvas.create_image(0, 0, image = img, anchor = "nw")
 
         shortcut_icon = icon_path
         shortcut_icon_index = icon_index
@@ -70,7 +63,7 @@ def show(shortcut_type: str, path: str):
     buttons.pack(pady = 16, fill = "x", expand = True)
 
     def change_icon():
-        shortcut_icon, shortcut_icon_index = preferences.pick_icon()
+        shortcut_icon, shortcut_icon_index = icon.pick_icon(window)
         update_icon(shortcut_icon, shortcut_icon_index)
 
     change_icon_btn = custom_ui.Button(buttons, text = strings.lang.change_icon, command = change_icon)
@@ -84,8 +77,8 @@ def show(shortcut_type: str, path: str):
 
         window.destroy()
         
-        if shortcut_type == "folder": preferences.create_folder_shortcut(path, shortcut_name, shortcut_icon, shortcut_icon_index)
-        else: preferences.create_file_shortcut(path, shortcut_name, shortcut_icon, shortcut_icon_index)
+        if shortcut_type == "folder": shortcut.create_folder_shortcut(path, shortcut_name, shortcut_icon, shortcut_icon_index)
+        else: shortcut.create_file_shortcut(path, shortcut_name, shortcut_icon, shortcut_icon_index)
 
     ok_btn = custom_ui.Button(buttons, text = strings.lang.ok, default = "active", command = create_shortcut).pack(side = "right", padx = (8, 0))
     cancel_btn = custom_ui.Button(buttons, text = strings.lang.cancel, command = window.destroy).pack(side = "right")

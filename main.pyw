@@ -6,7 +6,7 @@ from tkinter import ttk, filedialog
 window = custom_ui.App()
 window.title("Files & Folders on Taskbar")
 window.resizable(False, False)
-window.configure(padx = 14, pady = 8)
+window.configure(padx = preferences.get_scaled_value(14), pady = preferences.get_scaled_value(8))
 
 shortcut_type = tk.StringVar(value = "file")
 
