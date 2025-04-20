@@ -1,8 +1,6 @@
 import ctypes, os
 import os, appdirs, ctypes, yaml, sys
 
-os.chdir(os.path.dirname(__file__))
-
 if getattr(sys, "frozen", False): 
     internal = "_internal\\"
     os.chdir(os.path.dirname(sys.executable))
