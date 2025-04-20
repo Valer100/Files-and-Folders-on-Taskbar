@@ -4,3 +4,6 @@ pywinstyles
 winaccent
 hPyT
 tkinter-tooltip
+appdirs
+iconextract
+pyyaml
