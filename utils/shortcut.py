@@ -96,8 +96,8 @@ def get_folder_icon(folder_path: str) -> str:
             _folder_icon_path_list.reverse()
             _folder_icon_index = int(_folder_icon_path_list[0])
 
-            _folder_icon = _folder_icon.lower().replace("," + str(_folder_icon_index), "")
+            _folder_icon = _folder_icon.lower().removesuffix("," + str(_folder_icon_index))
 
-            folder_icon = (_folder_icon.replace("," + str(_folder_icon_index), ""), _folder_icon_index)
+            folder_icon = (os.path.expandvars(_folder_icon), _folder_icon_index)
     
     return folder_icon

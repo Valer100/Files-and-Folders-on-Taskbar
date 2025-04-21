@@ -1,4 +1,4 @@
-import ctypes, shutil
+import ctypes, shutil, os
 from io import BytesIO
 from PIL import Image, IcoImagePlugin
 from icoextract import IconExtractor
@@ -12,16 +12,16 @@ def pick_icon(window, initial_icon_file_path: str = "C:\\Windows\\System32\\shel
     ctypes.windll.kernel32.lstrcpyW(icon_file_buffer, initial_icon_file_path)
 
     result = ctypes.windll.shell32.PickIconDlg(ctypes.windll.user32.GetParent(window.winfo_id()), icon_file_buffer, ctypes.sizeof(icon_file_buffer), ctypes.byref(icon_index))
-    if result: return (icon_file_buffer.value, icon_index.value)
+    if result: return (os.path.expandvars(icon_file_buffer.value), icon_index.value)
 
 
-def extract_icon(path: str, index: str) -> None:
+def extract_icon(path: str, index: int) -> None:
     if not path.endswith(".ico"):
         try:
             extractor = IconExtractor(path)
             extractor.export_icon(preferences.temp + "\\icon.ico", index)
         except:
-            extractor = IconExtractor(path.replace("System32", "SystemResources") + ".mun")
+            extractor = IconExtractor(path.lower().replace("system32", "systemresources") + ".mun")
             extractor.export_icon(preferences.temp + "\\icon.ico", index)
     else:
         shutil.copyfile(path, preferences.temp + "\\icon.ico")

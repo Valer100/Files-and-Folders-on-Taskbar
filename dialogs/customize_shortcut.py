@@ -53,7 +53,7 @@ def show(shortcut_type: str, path: str):
         if use_folder_icon.get(): 
             change_icon_btn.forget()
 
-            _icon = preferences.get_folder_icon(path)
+            _icon = shortcut.get_folder_icon(path)
             update_icon(_icon[0], _icon[1])
         else: 
             change_icon_btn.pack(side = "left")
