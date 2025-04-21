@@ -92,8 +92,7 @@ class Icons():
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", message = "Image was not the expected size", category = UserWarning, module = "PIL")
 
-            # icon.extract_and_tint_icon(preferences.internal + "icons\\icon_about.ico", None, 63, icons.app_about)
-            icons.app_about.configure(file = preferences.internal + "icons\\icon.png")
+            icon.extract_and_tint_icon(preferences.internal + "icons\\icon_about.ico", None, 50, icons.app_about)
             icon.extract_and_tint_icon(preferences.internal + "icons\\arrow_up.ico", colors.fg, 9, icons.arrow_up)
             icon.extract_and_tint_icon(preferences.internal + "icons\\arrow_down.ico", colors.fg, 9, icons.arrow_down)
 
