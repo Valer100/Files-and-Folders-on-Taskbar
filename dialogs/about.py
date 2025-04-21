@@ -25,7 +25,7 @@ def show():
     app_info = ttk.Frame(window)
     app_info.pack(fill = "x")
 
-    app_icon = tk.Canvas(app_info, width = preferences.get_scaled_value(50), height = preferences.get_scaled_value(50), highlightthickness = 0, background = "#000000")
+    app_icon = tk.Canvas(app_info, width = preferences.get_scaled_value(50), height = preferences.get_scaled_value(50), highlightthickness = 0, background = custom_ui.colors.bg)
     app_icon.pack(side = "left", padx = (0, preferences.get_scaled_value(16)), pady = (preferences.get_scaled_value(16), 0))
     app_icon.create_image(0, 0, image = custom_ui.icons.app_about, anchor = "nw")
 

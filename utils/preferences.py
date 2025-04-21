@@ -12,7 +12,7 @@ if os.path.exists("preferences") and os.path.isdir("preferences"):
     user_preferences = os.path.abspath("preferences")
     is_portable = True
 else:
-    user_preferences = appdirs.user_config_dir(appname = "Files & Folder on Taskbar", appauthor = False, roaming = True)
+    user_preferences = appdirs.user_config_dir(appname = "Files & Folders on Taskbar", appauthor = False, roaming = True)
     is_portable = False
 
 working_folder = "C:\\Users\\Public\\Documents\\Files & Folders on Taskbar\\"
