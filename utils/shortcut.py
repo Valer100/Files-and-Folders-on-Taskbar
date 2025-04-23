@@ -1,4 +1,4 @@
-import random, win32com.client, ctypes, os, strings, shutil, charset_normalizer
+import random, win32com.client, subprocess, ctypes, os, strings, shutil
 import os, ctypes
 from utils import preferences
 
@@ -91,9 +91,7 @@ def post_create_shortcut():
 
 
 def get_folder_icon(folder_path: str) -> str:
-    folder_config = str(charset_normalizer.from_path(folder_path + "\\desktop.ini").best()).splitlines()
-    print(folder_config)
-
+    folder_config = subprocess.getoutput(f"type \"{folder_path}\\desktop.ini\"").split("\n")
     folder_icon = ("C:\\Windows\\System32\\shell32.dll", 4)
 
     for line in folder_config:
