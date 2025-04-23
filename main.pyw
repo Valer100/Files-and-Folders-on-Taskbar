@@ -1,4 +1,4 @@
-import tkinter as tk, subprocess, shutil, custom_ui, tktooltip, strings
+import tkinter as tk, shutil, custom_ui, tktooltip, strings
 from tkinter import ttk, filedialog
 from dialogs import separator_wizard, customize_shortcut, about, change_language, change_theme
 from utils import preferences
@@ -10,7 +10,7 @@ window.configure(padx = preferences.get_scaled_value(14), pady = preferences.get
 
 shortcut_type = tk.StringVar(value = "file")
 
-subprocess.call(f"rmdir /q /s \"{preferences.working_folder}\\separators\"", shell = True)
+shutil.rmtree(preferences.working_folder + "\\separators")
 shutil.copytree(preferences.internal + "separators", preferences.working_folder + "\\separators")
 
 

@@ -1,14 +1,15 @@
-import random, win32com.client, subprocess, ctypes, os, strings
+import random, win32com.client, ctypes, os, strings, shutil
 import os, ctypes
 from utils import preferences
 
 
 def create_separator_shortcut(icon: str):
     delete_remnants()
-
     random_number = random.randint(1000000000, 9999999999)
 
-    subprocess.call(f"md \"{preferences.working_folder}\\shortcuts\\", shell = True)
+    if not os.path.exists(preferences.working_folder + "\\shortcuts"):
+        os.mkdir(preferences.working_folder + "\\shortcuts")
+    
     open(preferences.working_folder + f"\\shortcuts\\separator_shortcut_{random_number}.vbs", "w", encoding = "utf8").write("")
 
     shell = win32com.client.Dispatch("WScript.Shell")
@@ -30,7 +31,9 @@ def create_file_shortcut(file_path, name: str, icon_path: str, icon_index: int =
     file_name = path_list[len(path_list) - 1]
     random_number_2 = str(random.randint(1000, 9999))
 
-    subprocess.call(f"md \"{preferences.working_folder}\\shortcuts\\", shell = True)
+    if not os.path.exists(preferences.working_folder + "\\shortcuts"):
+        os.mkdir(preferences.working_folder + "\\shortcuts")
+
     open(preferences.working_folder + f"\\shortcuts\\file_shortcut_{random_number}.bat", "w", encoding = "utf8").write(f"chcp 65001 > nul\ncd \"{(file_path + random_number_2).replace(file_name + random_number_2, '')}\"\n\"{file_path}\"")
     open(preferences.working_folder + f"\\shortcuts\\file_shortcut_{random_number}.vbs", "w", encoding = "utf8").write(preferences.script_template_2.replace("(command)", f"\"\"{preferences.working_folder}\\shortcuts\\file_shortcut_{random_number}.bat\"\""))
 
@@ -52,7 +55,9 @@ def create_folder_shortcut(folder_path: str, name: str, icon_path: str, icon_ind
     random_number = random.randint(1000000000, 9999999999)
     folder_path = folder_path.replace('/', '\\')
 
-    subprocess.call(f"md \"{preferences.working_folder}\\shortcuts\\", shell = True)
+    if not os.path.exists(preferences.working_folder + "\\shortcuts"):
+        os.mkdir(preferences.working_folder + "\\shortcuts")
+
     open(preferences.working_folder + f"\\shortcuts\\folder_shortcut_{random_number}.bat", "w", encoding = "utf8").write(f"chcp 65001 > nul\nexplorer \"{folder_path}\"")
     open(preferences.working_folder + f"\\shortcuts\\folder_shortcut_{random_number}.vbs", "w", encoding = "utf8").write(preferences.script_template_2.replace("(command)", f"\"\"{preferences.working_folder}\\shortcuts\\folder_shortcut_{random_number}.bat\"\""))
 
@@ -69,12 +74,13 @@ def create_folder_shortcut(folder_path: str, name: str, icon_path: str, icon_ind
 
 
 def delete_remnants():
-    subprocess.call(f"rmdir /q /s \"{preferences.working_folder}\\shortcut\"", shell = True)
-    subprocess.call(f"mkdir \"{preferences.working_folder}\\shortcut\"", shell = True)
+    if not os.path.exists(preferences.working_folder + "\\shortcut"):
+        shutil.rmtree(preferences.working_folder + "\\shortcut")
+        os.mkdir(preferences.working_folder + "\\shortcut")
 
 
 def post_create_shortcut():
-    subprocess.call(f"explorer \"{preferences.working_folder}shortcut\"", shell = True)
+    os.startfile(preferences.working_folder + "shortcut")
 
     ctypes.windll.user32.MessageBoxW(
         None,
@@ -85,7 +91,7 @@ def post_create_shortcut():
 
 
 def get_folder_icon(folder_path: str) -> str:
-    folder_config = subprocess.getoutput(f"type \"{folder_path}\\desktop.ini\"").split("\n")
+    folder_config = open(folder_path + "\\desktop.ini", "r").read().split("\n")
     folder_icon = ("C:\\Windows\\System32\\shell32.dll", 4)
 
     for line in folder_config:
