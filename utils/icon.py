@@ -19,10 +19,14 @@ def extract_icon(path: str, index: int) -> None:
     if not path.endswith(".ico"):
         try:
             extractor = IconExtractor(path)
-            extractor.export_icon(preferences.temp + "\\icon.ico", index)
+
+            if not index < 0: extractor.export_icon(preferences.temp + "\\icon.ico", num = index)
+            else: extractor.export_icon(preferences.temp + "\\icon.ico", resource_id = index * -1)
         except:
             extractor = IconExtractor(path.lower().replace("system32", "systemresources") + ".mun")
-            extractor.export_icon(preferences.temp + "\\icon.ico", index)
+            
+            if not index < 0: extractor.export_icon(preferences.temp + "\\icon.ico", num = index)
+            else: extractor.export_icon(preferences.temp + "\\icon.ico", resource_id = index * -1)
     else:
         shutil.copyfile(path, preferences.temp + "\\icon.ico")
 

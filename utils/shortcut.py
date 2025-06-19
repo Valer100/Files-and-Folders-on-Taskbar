@@ -74,7 +74,7 @@ def create_folder_shortcut(folder_path: str, name: str, icon_path: str, icon_ind
 
 
 def delete_remnants():
-    if not os.path.exists(preferences.working_folder + "\\shortcut"):
+    if os.path.exists(preferences.working_folder + "\\shortcut"):
         shutil.rmtree(preferences.working_folder + "\\shortcut")
         os.mkdir(preferences.working_folder + "\\shortcut")
 
