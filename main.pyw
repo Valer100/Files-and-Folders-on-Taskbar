@@ -10,10 +10,6 @@ window.configure(padx = preferences.get_scaled_value(14), pady = preferences.get
 
 shortcut_type = tk.StringVar(value = "file")
 
-shutil.rmtree(preferences.working_folder + "\\separators")
-shutil.copytree(preferences.internal + "separators", preferences.working_folder + "\\separators")
-
-
 def browse(shortcut_type):
     if shortcut_type == "file":
         file = filedialog.askopenfile(title = strings.lang.choose_a_file, parent = window)

@@ -1,5 +1,4 @@
-import ctypes, os
-import os, appdirs, ctypes, yaml, sys
+import ctypes, os, appdirs, ctypes, yaml, sys, shutil
 
 if getattr(sys, "frozen", False): 
     internal = "_internal\\"
@@ -21,7 +20,14 @@ script_template_2 = "WScript.CreateObject(\"WScript.Shell\").Run \"(command)\", 
 temp = user_preferences + "\\temp"
 
 if not os.path.exists(user_preferences): os.mkdir(user_preferences)
+if not os.path.exists(working_folder): os.mkdir(working_folder)
+if not os.path.exists(working_folder + "separators"): os.mkdir(working_folder + "separators")
+if not os.path.exists(working_folder + "shortcuts"): os.mkdir(working_folder + "shortcuts")
+if not os.path.exists(working_folder + "shortcut"): os.mkdir(working_folder + "shortcut")
 if not os.path.exists(temp): os.mkdir(temp)
+
+shutil.rmtree(working_folder + "separators")
+shutil.copytree(internal + "separators", working_folder + "separators")
 
 theme, language = "default", "default"
 
