@@ -29,7 +29,7 @@ jobs:
 
       - name: Build application
         run: |
-            $env:PATH = "C:\hostedtoolcache\windows\python\3.11.9\x86\Scripts;C:\hostedtoolcache\windows\python\3.11.9\x86;$env:PATH"
+            $env:PATH = "${env:ProgramFiles(x86)}\Python311-32\Scripts;${env:ProgramFiles(x86)}\Python311-32;$env:PATH"
             .\build_app.bat
             
       - name: Build installer
@@ -133,7 +133,7 @@ jobs:
 
       - name: Build application
         run: |
-            $env:PATH = "C:\Program Files\Python311-arm64\Scripts;C:\Program Files\Python311-arm64;$env:PATH"
+            $env:PATH = "${env:ProgramFiles}\Python311-arm64\Scripts;${env:ProgramFiles}\Python311-arm64;$env:PATH"
             .\build_app.bat
             
       - name: Build installer
