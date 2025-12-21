@@ -3,7 +3,7 @@ from . import _info
 # Informations sur la langue
 language = "Français"
 language_en = "French"
-author = "Valer100"
+author = "Locktix"
 
 # Fenêtre principale
 choose_a_file = "Choisir un fichier"
