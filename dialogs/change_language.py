@@ -1,4 +1,4 @@
-import strings.en_US, strings.ro_RO
+import strings.en_US, strings.ro_RO, strings.fr_FR
 import tkinter as tk, strings, custom_ui
 from tkinter import ttk
 from utils import preferences
