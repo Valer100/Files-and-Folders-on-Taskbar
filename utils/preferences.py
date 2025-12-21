@@ -26,8 +26,25 @@ if not os.path.exists(working_folder + "shortcuts"): os.mkdir(working_folder + "
 if not os.path.exists(working_folder + "shortcut"): os.mkdir(working_folder + "shortcut")
 if not os.path.exists(temp): os.mkdir(temp)
 
-shutil.rmtree(working_folder + "separators")
-shutil.copytree(internal + "separators", working_folder + "separators")
+# Copy separators, handling permission errors
+try:
+    if os.path.exists(working_folder + "separators"):
+        shutil.rmtree(working_folder + "separators", ignore_errors=True)
+    shutil.copytree(internal + "separators", working_folder + "separators")
+except (PermissionError, OSError):
+    # If we can't remove/copy, try to update existing files
+    if os.path.exists(internal + "separators"):
+        for item in os.listdir(internal + "separators"):
+            src = os.path.join(internal + "separators", item)
+            dst = os.path.join(working_folder + "separators", item)
+            try:
+                if os.path.isdir(src):
+                    if not os.path.exists(dst):
+                        shutil.copytree(src, dst)
+                else:
+                    shutil.copy2(src, dst)
+            except (PermissionError, OSError):
+                pass
 
 theme, language = "default", "default"
 

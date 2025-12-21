@@ -11,7 +11,7 @@ def show():
     window.title(strings.lang.change_language)
     window.configure(padx = preferences.get_scaled_value(16), pady = 0)
 
-    languages = ["default", "en_US", "ro_RO"]
+    languages = ["default", "en_US", "ro_RO", "fr_FR"]
     language = tk.StringVar(value = preferences.language if preferences.language in languages else "default")
 
     header = ttk.Frame(window)
@@ -23,6 +23,7 @@ def show():
     custom_ui.Radiobutton(window, text = strings.lang.lang_system_default, value = "default", variable = language).pack(anchor = "w")
     custom_ui.Radiobutton(window, text = strings.en_US.language, value = "en_US", variable = language).pack(anchor = "w")
     custom_ui.Radiobutton(window, text = strings.ro_RO.language, value = "ro_RO", variable = language).pack(anchor = "w")
+    custom_ui.Radiobutton(window, text = strings.fr_FR.language, value = "fr_FR", variable = language).pack(anchor = "w")
 
     buttons = ttk.Frame(window)
     buttons.pack(pady = preferences.get_scaled_value(16), fill = "x")
