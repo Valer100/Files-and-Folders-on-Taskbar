@@ -24,7 +24,6 @@ def show():
     custom_ui.Radiobutton(window, text = strings.en_US.language, value = "en_US", variable = language).pack(anchor = "w")
     custom_ui.Radiobutton(window, text = strings.fr_FR.language, value = "fr_FR", variable = language).pack(anchor = "w")
     custom_ui.Radiobutton(window, text = strings.ro_RO.language, value = "ro_RO", variable = language).pack(anchor = "w")
-    
 
     buttons = ttk.Frame(window)
     buttons.pack(pady = preferences.get_scaled_value(16), fill = "x")
