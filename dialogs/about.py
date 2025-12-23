@@ -1,6 +1,5 @@
 import tkinter as tk, strings, custom_ui, webbrowser
 from tkinter import ttk
-from tkinter.scrolledtext import ScrolledText
 import strings._info
 from utils import preferences
 from dialogs import app_license
@@ -17,8 +16,12 @@ def show():
         global arrow, show_os_licenses
         show_os_licenses = not show_os_licenses
 
-        if show_os_licenses: licenses.pack(pady = preferences.get_scaled_value(16))
-        else: licenses.forget()
+        if show_os_licenses: 
+            licenses_header.pack(after = links, pady = (preferences.get_scaled_value(16), preferences.get_scaled_value(8)), anchor = "w")
+            licenses.pack(after = licenses_header, pady = preferences.get_scaled_value(8))
+        else: 
+            licenses_header.forget()
+            licenses.forget()
 
         show_licenses.configure(image = custom_ui.icons.arrow_up if show_os_licenses else custom_ui.icons.arrow_down)
 
@@ -55,7 +58,9 @@ def show():
 
     custom_ui.Button(buttons, text = strings.lang.ok, command = window.destroy, default = "active").pack(side = "right")
 
-    licenses = ScrolledText(window, width = 80, height = 20, wrap = "word", background = custom_ui.colors.entry_bg,
+    licenses_header = ttk.Label(window, text = strings.lang.open_source_licenses, font = ("Segoe UI Semibold", 14))
+
+    licenses = custom_ui.ScrolledTextTtkScrollbar(window, width = 80, height = 20, wrap = "word", background = custom_ui.colors.entry_bg,
                                  foreground = custom_ui.colors.fg, selectbackground = custom_ui.colors.entry_select,
                                  selectforeground = "#ffffff", highlightthickness = 1, relief = "solid",
                                  highlightbackground = custom_ui.colors.entry_bd, 

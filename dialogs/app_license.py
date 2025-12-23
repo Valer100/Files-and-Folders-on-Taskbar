@@ -1,6 +1,5 @@
 import tkinter as tk, strings, custom_ui
 from tkinter import ttk
-from tkinter.scrolledtext import ScrolledText
 from utils import preferences
 
 def show(window):
@@ -14,7 +13,7 @@ def show(window):
     ttk.Label(header, text = "\ueb95 ", font = ("Segoe UI", 17), padding = (0, 5, 0, 0)).pack(side = "left")
     ttk.Label(header, width = 25, text = strings.lang.license, font = ("Segoe UI Semibold", 17)).pack(side = "left")
 
-    license_text = ScrolledText(window, width = 80, height = 22, wrap = "word", background = custom_ui.colors.entry_bg,
+    license_text = custom_ui.ScrolledTextTtkScrollbar(window, width = 80, height = 22, wrap = "word", background = custom_ui.colors.entry_bg,
                                 foreground = custom_ui.colors.fg, selectbackground = custom_ui.colors.entry_select,
                                 selectforeground = "#ffffff", highlightthickness = 1, relief = "solid",
                                 highlightbackground = custom_ui.colors.entry_bd, border = 0,

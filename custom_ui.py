@@ -39,6 +39,9 @@ class Colors():
             self.input_unchecked = "#404040"
             self.input_hover = "#808080"
             self.input_press = "#afafaf"
+            self.scrollbar_arrow = "#606060"
+            self.scrollbar_arrow_disabled = "#bfbfbf"
+            self.scrollbar_thumb = "#cdcdcd"
             self.accent = winaccent.accent_dark
             self.accent_hover = winaccent._utils.blend_colors(self.accent, self.bg, 90)
             self.accent_press = winaccent._utils.blend_colors(self.accent, self.bg, 80)
@@ -76,6 +79,9 @@ class Colors():
             self.input_unchecked = "#404040"
             self.input_hover = "#4f4f4f"
             self.input_press = "#5f5f5f"
+            self.scrollbar_arrow = "#676767"
+            self.scrollbar_arrow_disabled = "#404040"
+            self.scrollbar_thumb = "#4d4d4d"
             self.accent = winaccent.accent_light
             self.accent_hover = winaccent._utils.blend_colors(self.accent, self.bg, 80)
             self.accent_press = winaccent._utils.blend_colors(self.accent, self.bg, 60)
@@ -572,6 +578,16 @@ class Radiobutton2(tk.Frame):
         self.radio.config()
 
 
+class ScrolledTextTtkScrollbar(ScrolledText):
+    def __init__(self, master, **kwargs):
+        super().__init__(master, **kwargs)
+
+        self.vbar.destroy()
+        self.vbar = ttk.Scrollbar(self.frame, command = self.yview)
+        self.vbar.pack(side = "right", fill = "y")
+        self.configure(yscrollcommand = self.vbar.set)
+
+
 class App(tk.Tk):
     def set_theme(self):
         pywinstyles.apply_style(self, "light" if colors.light_theme else "dark")
@@ -586,11 +602,33 @@ class App(tk.Tk):
         style.configure("StatusBar.TFrame", background = colors.bg_status_bar)
         style.configure("StatusBar.TLabel", background = colors.bg_status_bar, foreground = colors.fg)
         style.configure("Description.TLabel", foreground = colors.fg_desc)
+        
+        self.style.configure(
+            "Vertical.TScrollbar", background = colors.bg, troughcolor = colors.bg, 
+            bordercolor = colors.bg, relief = "solid", padding = (2, 3, 1, 2)
+        )
+
+        self.style.map(
+            "Vertical.TScrollbar",
+            arrowcolor = [("disabled", colors.scrollbar_arrow_disabled), ("", colors.scrollbar_arrow)],
+            lightcolor = [("disabled", colors.bg), ("", colors.scrollbar_thumb)],
+            darkcolor = [("disabled", colors.bg), ("", colors.scrollbar_thumb)],
+            fieldbackground = [("disabled", colors.bg), ("", colors.scrollbar_thumb)],
+        )
+
         self.configure(background = colors.bg)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.withdraw()
+
+        self.style = ttk.Style()
+        self.style.element_create("Custom.Vertical.Scrollbar.trough", "from", "clam")
+        self.style.element_create("Custom.Vertical.Scrollbar.uparrow", "from", "alt")
+        self.style.element_create("Custom.Vertical.Scrollbar.downarrow", "from", "alt")
+        self.style.element_create("Custom.Vertical.Scrollbar.thumb", "from", "clam", "field")
+
+        self.style.layout("Vertical.TScrollbar", [("Button.padding", {"sticky": "ns", "children": [("Custom.Vertical.Scrollbar.trough", {"sticky": "ns", "children": [("Custom.Vertical.Scrollbar.uparrow", {"side": "top", "sticky": "nswe"}), ("Custom.Vertical.Scrollbar.downarrow", {"side": "bottom", "sticky": "nswe"}), ("Custom.Vertical.Scrollbar.thumb", {"expand": "1", "sticky": "nswe"})]})]})])
 
         self.iconbitmap(default = preferences.internal + "icons\\icon.ico")
         self.update()
