@@ -31,12 +31,14 @@ OutputBaseFilename=fnf_on_taskbar_installer_x86
 SetupIconFile=assets/installer/icon.ico
 Compression=lzma
 SolidCompression=yes
-WizardStyle=modern
+WizardStyle=modern dynamic
 MinVersion=10.0
 UninstallDisplayName=Files & Folders on Taskbar (x86)
 UninstallDisplayIcon={app}\{#MyAppExeName}
-WizardSmallImageFile=assets\installer\icon.bmp
+WizardSmallImageFile=assets\installer\icon_light.bmp
+WizardSmallImageFileDynamicDark=assets\installer\icon_dark.bmp
 WizardImageFile=assets\installer\banner.bmp
+WizardImageFileDynamicDark=assets\installer\banner.bmp
 WizardSizePercent=100
 VersionInfoVersion=2.0.0
 

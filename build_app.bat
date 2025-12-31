@@ -19,7 +19,7 @@ echo.
 echo (3/4) Building with PyInstaller...
 echo.
 
-python -m PyInstaller main.pyw --onedir --icon "icons/icon.ico" --version-file "version.txt" --name "fnf_on_taskbar" --add-data "separators;./separators/" --add-data "icons;./icons/" --add-data "OPEN_SOURCE_LICENSES.txt;." --exclude-module "numpy" --exclude-module "setuptools" --exclude-module "wheel" --exclude-module "importlib_metadata" --exclude-module "markupsafe" --exclude-module "ssl" --exclude-module "_ssl"
+python -m PyInstaller main.pyw --onedir --icon "icons/icon.ico" --version-file "version.txt" --name "fnf_on_taskbar" --add-data "separators;./separators/" --add-data "icons;./icons/" --add-data "OPEN_SOURCE_LICENSES.txt;." --add-data "LICENSE;." --exclude-module "numpy" --exclude-module "setuptools" --exclude-module "wheel" --exclude-module "importlib_metadata" --exclude-module "markupsafe" --exclude-module "ssl" --exclude-module "_ssl"
 del /f /q dist\fnf_on_taskbar\_internal\libcrypto-3.dll
 del /f /q dist\fnf_on_taskbar\_internal\libcrypto-3-arm64.dll
 del /f /q dist\fnf_on_taskbar\_internal\api-ms-win-*.dll
